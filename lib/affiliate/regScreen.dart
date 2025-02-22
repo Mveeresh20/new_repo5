@@ -23,7 +23,6 @@ class _RegScreenState extends State<RegScreen> {
   final TextEditingController _mobController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  final TextEditingController _referralIdController = TextEditingController();
 
   Future<void> _registerUser() async {
     // Prepare the data to send to the backend
@@ -33,21 +32,18 @@ class _RegScreenState extends State<RegScreen> {
 
     final String password = _passwordController.text;
     final String cpassword = _confirmPasswordController.text;
-    final String referralId = _referralIdController.text;
-
     // Use the Config class to get the API domain and endpoint
-    final url = Uri.parse('${Config.apiDomain}${Config.celebrity_reg}');
+    final url = Uri.parse('${Config.apiDomain}${Config.affiliater_reg}');
 
     // Send a POST request to the PHP backend
     final response = await http.post(
       url,
       body: {
-        'c_name': fullName,
-        'c_email': email,
-        'c_mob': mob, // Update the variable name as per your input controller
-        'c_password': password,
-        'c_cpassword': cpassword,
-        'referralId':referralId,
+        'a_name': fullName,
+        'a_email': email,
+        'a_mob': mob, // Update the variable name as per your input controller
+        'a_password': password,
+        'a_cpassword': cpassword,
       },
 
     );
@@ -227,23 +223,6 @@ class _RegScreenState extends State<RegScreen> {
                         ),
                       ),
                     ),
-                    TextField(
-                      controller: _referralIdController,
-                      decoration: const InputDecoration(
-                        suffixIcon: Icon(
-                          Icons.check,
-                          color: Colors.grey,
-                        ),
-                        label: Text(
-                          'Refferal Id',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
-                          ),
-                        ),
-                      ),
-                    ),
-
                     const SizedBox(height: 20),
                     GestureDetector(
                       onTap: _registerUser, // Call the register function

@@ -1394,7 +1394,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 */
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:tngtong/config.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:image_picker/image_picker.dart';
@@ -1412,31 +1412,6 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   SharedPreferences? prefs; // SharedPreferences instance
   String? loginEmail; // To store the retrieved email
   String? userId;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializePreferences();
-    //fetchUserId();
-  }
-
-  Future<void> _initializePreferences() async {
-    prefs = await SharedPreferences.getInstance();
-    setState(() {
-      loginEmail = prefs?.getString('loginEmail');
-    });
-    print('Login Email: $loginEmail');
-    fetchUserId();
-  }
-
-  Future<void> fetchUserId() async {
-    String? id = await ApiService.getUserId(loginEmail);
-    setState(() {
-      userId = id;
-    });
-  }
-
-
 
   bool _passwordVisible = false;
   bool _confirmPasswordVisible = false;
@@ -1503,6 +1478,43 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   final String _apiUrl = "https://demo.infoskaters.com/api/celebrity_update_profile.php";
   File? _selectedImage;
   String _serverUrl = "https://demo.infoskaters.com/api/upload.php";
+  @override
+  void initState() {
+    super.initState();
+
+    _initializePreferences();
+    //fetchProfileData("2");
+
+    /*setState(() {
+      _aboutController.text = "hi" ?? '';});*/
+    //fetchUserId();
+  }
+
+  Future<void> _initializePreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      loginEmail = prefs?.getString('loginEmail');
+    });
+    print('Login Email: $loginEmail');
+    fetchUserId();
+
+  }
+
+  Future<void> fetchUserId() async {
+    String? id = await ApiService.getCelId(loginEmail);
+    setState(() {
+      userId = id;
+      //userId = "2";
+
+    });
+    fetchProfileData(userId!);
+
+    print('Login Id: $userId');
+
+  }
+
+
+
   Future<void> _pickImage() async {
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
 
@@ -1515,13 +1527,17 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   Future<void> _submitForm() async {
     try {
+      print("Selected category submit ${_selectedCategories}");
+
       var response = await http.post(
         Uri.parse(_apiUrl),
         headers: {
           'Content-Type': 'application/json', // Use application/json if you're sending JSON
         },
         body: jsonEncode({
-          'c_id': "2",
+
+          //////////////////
+          'c_id':userId ,
           'name': _nameController.text,
           'email': _emailController.text,
           'phone': _phoneController.text,
@@ -1541,7 +1557,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           'video_price': _videoPriceController.text,
           'first_revision_price': _firstRevisionPriceController.text,
           'second_revision_price': _secondRevisionPriceController.text,
-          'profile_photo_url': _profilePhotoController.text,
+          //'profile_photo_url': _profilePhotoController.text,
           'work_details': _workDetailsController.text,
 
           // Payment/Bank Details
@@ -1553,6 +1569,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           'upi_number': _upiNumberController.text,
 
           // Social Media
+          'profile_photo_url':"",
           'instagram_followers': _instagramFollowersController.text,
           'instagram_link': _instagramLinkController.text,
           'facebook_followers': _facebookFollowersController.text,
@@ -1566,12 +1583,47 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
           // Gender and Date of Birth
           'gender': _selectedGender,
-          'birthday': _selectedDate?.toIso8601String(),
+          //'birthday': _selectedDate?.toIso8601String(),
 
           // Tags and Categories
-          'tags_str': _selectedTags,
-          'categories_str': _selectedCategories,
-          'profession': _selectedProfession,
+          'tags_str': jsonEncode(_selectedTags),
+          'categories_str': jsonEncode(_selectedCategories),
+          // 'profession': _selectedProfession,
+          //
+          /* "c_id": 2,
+          "about_you": "I am a professional artist with 5 years of experience.",
+          "work_name": "Freelance Illustrator",
+          "address": "123 Creative Lane",
+          "city": "Mumbai",
+          "state": "Maharashtra",
+          "country": "India",
+          "zip_code": "400001",
+          "video_price": "5000",
+          "first_revision_price": "2000",
+          "second_revision_price": "1000",
+          "work_details": "Specialized in digital illustrations, logo design, and branding.",
+          "bank_name": "HDFC Bank",
+          "ifsc_code": "HDFC0001234",
+          "account_number": "123456789101",
+          "account_holder_name": "John Doe",
+          "pan_number": "ABCDE1234F",
+          "upi_number": "john.doe@upi",
+          "gender": "Male",*/
+          "birthday": "1990-01-01",
+          /* "categories_str": "[\"Illustration\", \"Graphic Design\"]",
+         /"tags_str": "[\"Freelance\", \"Digital Art\"]",
+         /*"profile_photo_url":"",
+          "instagram_followers":"",
+          "instagram_link":"",
+          "facebook_followers":"",
+          "facebook_link":"",
+          "linkedin_followers":"",
+          "linkedin_link":"",
+          "youtube_followers":"",
+          "youtube_link":"",
+          "twitter_followers":"",
+          "twitter_link":"",*/
+////////////////////////////////////////////////////////////////
           // Add other fields here...*/
           /*"about_you": "This is a test about me section.",
           "work_name": "Actor",
@@ -1580,7 +1632,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           "state": "Test State",
           "country": "Test Country",
           "zip_code": "123456",*/
-         /* "video_price": "5000",
+          /* "video_price": "5000",
           "first_revision_price": "1000",
           "second_revision_price": "1500",
           "profile_photo_url": "https://example.com/profile.jpg",
@@ -1601,12 +1653,49 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           "youtube_link": "https://youtube.com/test",
           "twitter_followers": "3000",
           "twitter_link": "https://twitter.com/test",*/
-         /* "gender": "Male",
+          /* "gender": "Male",
           "birthday": "1990-01-01",
           "categories_str": "Actor, Influencer",
           "tags_str": "Movies, Acting, Influencer",
           "c_id": "2"*/
         }),
+        /* body: jsonEncode({
+            "c_id": 2,
+            "about_you": "I am a professional artist with 5 years of experience.",
+            "work_name": "Freelance Illustrator",
+            "address": "123 Creative Lane",
+            "city": "Mumbai",
+            "state": "Maharashtra",
+            "country": "India",
+            "zip_code": "400001",
+            "video_price": "5000",
+            "first_revision_price": "2000",
+            "second_revision_price": "1000",
+            "work_details": "Specialized in digital illustrations, logo design, and branding.",
+            "bank_name": "HDFC Bank",
+            "ifsc_code": "HDFC0001234",
+            "account_number": "123456789101",
+            "account_holder_name": "John Doe",
+            "pan_number": "ABCDE1234F",
+            "upi_number": "john.doe@upi",
+            "gender": "Male",
+            "birthday": "1990-01-01",
+            "categories_str": "[\"Illustration\", \"Graphic Design\"]",
+            "tags_str": "[\"Freelance\", \"Digital Art\"]",
+            "profile_photo_url":"",
+            "instagram_followers":"",
+            "instagram_link":"",
+            "facebook_followers":"",
+            "facebook_link":"",
+            "linkedin_followers":"",
+            "linkedin_link":"",
+            "youtube_followers":"",
+            "youtube_link":"",
+            "twitter_followers":"",
+            "twitter_link":""
+
+          }),*/
+
       );
 
       if (response.statusCode == 200) {
@@ -1618,8 +1707,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         } else {    print('Response body: ${responseData['message']}');
 
         ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Error: ${responseData['message']}')),
-          );
+          SnackBar(content: Text('Error: ${responseData['message']}')),
+        );
 
         }
       } else {
@@ -1631,8 +1720,10 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: $e')),
       );
+      print('error:$e');
+
     }
-    _uploadImage();
+    //_uploadImage();
   }
 
   Future<void> _uploadImage() async {
@@ -1647,7 +1738,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
     try {
       var request = http.MultipartRequest('POST', Uri.parse(_serverUrl));
-      request.files.add(await http.MultipartFile.fromPath('image', _selectedImage!.path));
+      request.files.add(
+          await http.MultipartFile.fromPath('image', _selectedImage!.path));
       request.fields['c_id'] = userId!;
 
       var response = await request.send();
@@ -1679,6 +1771,103 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     }
   }
 
+
+  Future<void> fetchProfileData(String c_id) async {
+    final String apiUrl = "https://demo.infoskaters.com/api/get_celebrity.php?c_id=$c_id";
+    final String getasicDetailsApi = "https://demo.infoskaters.com/api/get_celebrity_basic.php?c_id=$c_id";
+////
+    try {
+      //final url = Uri.parse('${Config.apiDomain}${Config.celebrity_reg}');
+
+      final response = await http.get(Uri.parse(getasicDetailsApi));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        print(data);
+        if (data.containsKey("error")) {
+          print("Error: ${data['error']}");
+          return;
+        }
+
+        setState(() {
+          _nameController.text = data['c_name'] ?? '';
+          _emailController.text = data['c_email'] ?? '';
+          _phoneController.text = data['c_mob'] ?? '';
+
+        });
+
+      } else {
+        print("Failed to load data: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("Error fetching data: $error");
+    }
+////
+    try {
+      final response = await http.get(Uri.parse(apiUrl));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        print(data);
+        if (data.containsKey("error")) {
+          print("Error: ${data['error']}");
+          return;
+        }
+
+        setState(() {
+          _aboutController.text = data['about_you'] ?? '';
+          _workNameController.text = data['work_name'] ?? '';
+          _addressController.text = data['address'] ?? '';
+          _cityController.text = data['city'] ?? '';
+          _stateController.text = data['state'] ?? '';
+          _countryController.text = data['country'] ?? '';
+          _zipController.text = data['zip_code'] ?? '';
+          _videoPriceController.text = data['video_price'] ?? '';
+          _firstRevisionPriceController.text = data['first_revision_price'] ?? '';
+          _secondRevisionPriceController.text = data['second_revision_price'] ?? '';
+          _workDetailsController.text = data['work_details'] ?? '';
+          _bankNameController.text = data['bank_name'] ?? '';
+          _ifscCodeController.text = data['ifsc_code'] ?? '';
+          _accountNumberController.text = data['account_number'] ?? '';
+          _accountHolderController.text = data['account_holder_name'] ?? '';
+          _panController.text = data['pan_number'] ?? '';
+          _upiNumberController.text = data['upi_number'] ?? '';
+          _instagramFollowersController.text = data['instagram_followers'].toString();
+          _instagramLinkController.text = data['instagram_link'] ?? '';
+          _facebookFollowersController.text = data['facebook_followers'].toString();
+          _facebookLinkController.text = data['facebook_link'] ?? '';
+          _linkedinFollowersController.text = data['linkedin_followers'].toString();
+          _linkedinLinkController.text = data['linkedin_link'] ?? '';
+          _youtubeFollowersController.text = data['youtube_followers'].toString();
+          _youtubeLinkController.text = data['youtube_link'] ?? '';
+          _twitterFollowersController.text = data['twitter_followers'].toString();
+          _twitterLinkController.text = data['twitter_link'] ?? '';
+         // _selectedTags=["Tag1", "Tag2", "Tag3", "Tag4", "Tag5", "Tag6"];
+          _selectedGender=data['gender'] ?? '';
+          //  _selectedDate=data['birthday'] ?? '';
+          /*  if (data['birthday'] != null && data['birthday'].isNotEmpty) {
+            try {
+              //_selectedDate = DateTime.parse(data['birthday']);
+            } catch (e) {
+              print("Error parsing date: $e");
+            }
+          }*/
+          _selectedCategories =List<String>.from(jsonDecode(data['categories_str']));
+          //_selectedCategories=["Category1","Category2"];
+          _selectedTags = List<String>.from(jsonDecode(data['tags_str']));
+          // _selectedProfession=data['gender'] ?? '';
+        });
+        print("Selected tags are ${_selectedTags}");
+        print("Selected category are ${_selectedCategories}");
+
+        print("Data loaded successfully");
+      } else {
+        print("Failed to load data: ${response.statusCode}");
+      }
+    } catch (error) {
+      print("Error fetching data: $error");
+    }
+  }
 
 
   @override
@@ -1771,7 +1960,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                     _buildTextField(_videoPriceController, "Video Price", Icons.attach_money),
                     _buildTextField(_firstRevisionPriceController, "1 Revision Price", Icons.attach_money),
                     _buildTextField(_secondRevisionPriceController, "2 Revision Price", Icons.attach_money),
-                   // _buildTextField(_profilePhotoController, "Profile Photo (URL)", Icons.image),
+                    // _buildTextField(_profilePhotoController, "Profile Photo (URL)", Icons.image),
                     _buildTextField(_workDetailsController, "Work Details (Shows/Movies)", Icons.work),
                   ],
                 ),
@@ -1808,7 +1997,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 onTap: () {
                   // Save logic here
                   _submitForm();
-                 // _uploadImage();
+                  // _uploadImage();
                 },
                 child: Container(
                   height: 55,
@@ -1836,6 +2025,40 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
 
   // Profile Image Update (Circular Shape with Pencil Icon)
   Widget _buildProfileImage() {
+    return GestureDetector(
+      onTap: () {
+        _pickImage(); // Trigger image selection when the circle is tapped
+      },
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CircleAvatar(
+            radius: 60,
+            backgroundImage: _profileImagePath != null
+                ? NetworkImage(_profileImagePath!) // Display selected image
+                : NetworkImage('https://demo.infoskaters.com/api/uploads/default_profile.png') // Fetch default image from API
+            as ImageProvider,
+            backgroundColor: Colors.grey[300], // Fallback background color
+          ),
+          Positioned(
+            bottom: 5,
+            right: 5,
+            child: CircleAvatar(
+              radius: 18,
+              backgroundColor: Colors.black, // Black background for pencil icon
+              child: Icon(
+                Icons.edit,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /* Widget _buildProfileImage() {
     return Stack(
       alignment: Alignment.center,
       children: [
@@ -1862,7 +2085,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
         ),
       ],
     );
-  }
+  }*/
 
   // Helper Widgets
   Widget _buildSection({required String title, required Widget child}) {
@@ -2016,7 +2239,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     );
   }
 
-  Widget _buildMultiSelect(List<String> items, List<String> selectedItems) {
+  /*Widget _buildMultiSelect(List<String> items, List<String> selectedItems) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: MultiSelectDialogField<String>(
@@ -2029,6 +2252,27 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           setState(() {
             selectedItems = selected;
           });
+        },
+      ),
+    );
+  }*/
+
+  Widget _buildMultiSelect(List<String> items, List<String> selectedItems) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: MultiSelectDialogField<String>(
+        title: const Text("Select Categories"),
+        items: items.map((item) => MultiSelectItem<String>(item, item)).toList(),
+        initialValue: selectedItems,
+        buttonText: const Text("Select Categories"),
+        onConfirm: (List<String> selected) {
+          setState(() {
+            selectedItems.clear();
+            selectedItems.addAll(selected); // Update selected items list
+          });
+
+          // Returning the updated list
+          print("Selected Items: $selectedItems");
         },
       ),
     );

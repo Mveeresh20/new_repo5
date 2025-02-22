@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tngtong/WelcomeScreen.dart'; // Import WelcomeScreen to navigate after logout
-import 'package:tngtong/customer/walletScreen.dart';
-import 'package:tngtong/customer/TrendingScreen.dart';
-import 'package:tngtong/customer/RefferralProgramScreen.dart';
-import 'package:tngtong/customer/SelectPackageScreen.dart';
-import 'package:tngtong/customer/WithdrawalsScreen.dart';
-import 'package:tngtong/customer/MyBookingsScreen.dart';
+import 'package:tngtong/affiliate/ProfileScreen.dart'; // Import ProfileUpdateScreen
+import 'package:tngtong/affiliate//walletScreen.dart'; // Import ProfileUpdateScreen
+/*import 'package:tngtong/celebrities/myProjectScreen.dart';*/
+import 'package:tngtong/affiliate/SelectPackageScreen.dart';
+import 'package:tngtong/affiliate/ReferralProgramScreen.dart';
+import 'package:tngtong/affiliate/WithdrawalsScreen.dart';
 
 class NavBar extends StatelessWidget {
   final VoidCallback onClose;
@@ -40,14 +40,14 @@ class NavBar extends StatelessWidget {
 
           // Menu Items
           _buildMenuItem(Icons.home, "Home", context),
-          _buildMenuItem(Icons.home, "Trending", context,nextScreen:TrendingScreen()),
-
           _buildMenuItem(Icons.trending_up, "Wallet", context,nextScreen: WalletScreen()),
-          _buildMenuItem(Icons.person, "Profile", context,),
-          _buildMenuItem(Icons.settings, "Booking", context,nextScreen:MyBookingsScreen()),
-          _buildMenuItem(Icons.settings, "Withdrawals", context, nextScreen: WithdrawalsScreen()),
-          _buildMenuItem(Icons.settings, "Packages", context,nextScreen: SelectPackageScreen()),
-          _buildMenuItem(Icons.settings, "Referral Program",context,nextScreen: ReferralProgramScreen()),
+          _buildMenuItem(Icons.settings, "Referral Program", context,nextScreen:ReferralProgramScreen()),
+
+          _buildMenuItem(Icons.person, "Profile", context, nextScreen: ProfileScreen()),
+         /* _buildMenuItem(Icons.settings, "My Projects", context,/*nextScreen: MyProjectsScreen()*/),*/
+          _buildMenuItem(Icons.settings, "Withdrawals", context,nextScreen:WithdrawalsScreen()),
+          _buildMenuItem(Icons.settings, "Packages", context,nextScreen:SelectPackageScreen()),
+          /*_buildMenuItem(Icons.settings, "Referral Program", context,nextScreen:ReferralProgramScreen()),*/
 
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),
         ],
@@ -100,3 +100,5 @@ class NavBar extends StatelessWidget {
     );
   }
 }
+
+

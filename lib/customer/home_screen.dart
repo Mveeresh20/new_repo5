@@ -15,6 +15,35 @@ class _HomeScreenState extends State<HomeScreen> {
   SharedPreferences? prefs; // SharedPreferences instance
   String? loginEmail; // To store the retrieved email
 
+  // Dummy Data for cards
+  final List<Map<String, String>> dummyData = [
+    {
+      'image': 'https://via.placeholder.com/150',
+      'actor': 'Actor 1',
+      'price': '\$100',
+    },
+    {
+      'image': 'https://via.placeholder.com/150',
+      'actor': 'Actor 2',
+      'price': '\$120',
+    },
+    {
+      'image': 'https://via.placeholder.com/150',
+      'actor': 'Actor 3',
+      'price': '\$90',
+    },
+    {
+      'image': 'https://via.placeholder.com/150',
+      'actor': 'Actor 4',
+      'price': '\$110',
+    },
+    {
+      'image': 'https://via.placeholder.com/150',
+      'actor': 'Actor 5',
+      'price': '\$80',
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -138,8 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 200,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: 10, // Number of cards
+                              itemCount: dummyData.length,
                               itemBuilder: (context, index) {
+                                final item = dummyData[index];
                                 return Padding(
                                   padding: const EdgeInsets.only(left: 16.0),
                                   child: Card(
@@ -148,7 +178,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     elevation: 3,
                                     child: Container(
-                                      width: 150,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.4, // 40% of screen width
                                       decoration: const BoxDecoration(
                                         gradient: LinearGradient(
                                           colors: [
@@ -159,13 +190,74 @@ class _HomeScreenState extends State<HomeScreen> {
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15)),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          'Card ${index + 1}',
-                                          style: const TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                        children: [
+                                          // Image at the top of the card
+                                          Container(
+                                            height: 120,
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                image: NetworkImage(
+                                                  item['image']!,
+                                                ),
+                                                fit: BoxFit.cover,
+                                              ),
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(15),
+                                                topRight: Radius.circular(15),
+                                              ),
+                                            ),
+                                          ),
+                                          // Actor name at the bottom of the image
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text(
+                                              item['actor']!,
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ),
+                                          // Second row containing price and book button
+                                          Padding(
+                                            padding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                              children: [
+                                                // Price Text
+                                                Text(
+                                                  item['price']!,
+                                                  style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                // Book Button
+                                                ElevatedButton(
+                                                  onPressed: () {
+                                                    // Handle booking action
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor: Colors.green, // Button color
+                                                  ),
+                                                  child: const Text(
+                                                    'Book',
+                                                    style: TextStyle(fontSize: 10),
+                                                  ),
+                                                ),
+
+                                              ],
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

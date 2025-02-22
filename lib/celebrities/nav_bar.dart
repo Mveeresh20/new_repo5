@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tngtong/WelcomeScreen.dart'; // Import WelcomeScreen to navigate after logout
 import 'package:tngtong/celebrities/cel_profile.dart'; // Import ProfileUpdateScreen
-import 'package:tngtong/celebrities/ImageUploaderService.dart'; // Import ProfileUpdateScreen
+import 'package:tngtong/celebrities/walletScreen.dart'; // Import ProfileUpdateScreen
+import 'package:tngtong/celebrities/myProjectScreen.dart';
+import 'package:tngtong/celebrities/SelectPackageScreen.dart';
+import 'package:tngtong/celebrities/ReferralProgramScreen.dart';
+import 'package:tngtong/celebrities/WithdrawalsScreen.dart';
 
 class NavBar extends StatelessWidget {
   final VoidCallback onClose;
@@ -36,9 +40,13 @@ class NavBar extends StatelessWidget {
 
           // Menu Items
           _buildMenuItem(Icons.home, "Home", context),
-          _buildMenuItem(Icons.trending_up, "Trending", context,nextScreen: ImageUploader()),
+          _buildMenuItem(Icons.trending_up, "Wallet", context,nextScreen: WalletScreen()),
           _buildMenuItem(Icons.person, "Profile", context, nextScreen: ProfileUpdateScreen()),
-          _buildMenuItem(Icons.settings, "Settings", context),
+          _buildMenuItem(Icons.settings, "My Projects", context,nextScreen: MyProjectsScreen()),
+          _buildMenuItem(Icons.settings, "Withdrawals", context,nextScreen:WithdrawalsScreen()),
+          _buildMenuItem(Icons.settings, "Packages", context,nextScreen:SelectPackageScreen()),
+          _buildMenuItem(Icons.settings, "Referral Program", context,nextScreen:ReferralProgramScreen()),
+
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),
         ],
       ),

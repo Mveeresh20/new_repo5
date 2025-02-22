@@ -58,6 +58,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'WelcomeScreen.dart'; // Ensure this file exists and contains WelcomeScreen
 import 'package:tngtong/customer/home_screen.dart'; // Ensure this file exists and contains HomeScreen
 import 'package:tngtong/celebrities/cel_dashboard.dart'; // Ensure this file exists and contains HomeScreen
+import 'package:tngtong/affiliate/affilate_dashboard.dart'; // Ensure this file exists and contains HomeScreen
 
 void main() {
   runApp(const MyApp());
@@ -79,14 +80,19 @@ class MyApp extends StatelessWidget {
 
       final String? isBrandLogin = prefs.getString('isBrandLogin');
       final String? isCelLogin = prefs.getString('isCelLogin');
+      final String? isAffiliaterLogin = prefs.getString('isAffiliaterLogin');
+
 
       print('isBrandLogin: $isBrandLogin');
       print('isCelLogin: $isCelLogin');
+      print('isAffiliaterLogin: $isAffiliaterLogin');
 
       if (isBrandLogin == 'True') {
         return const HomeScreen();
       } else if (isCelLogin == 'True') {
         return const CelebrityDashboardScreen();
+      }else if (isAffiliaterLogin == 'True') {
+        return const AffiliateDashboardScreen();
       } else {
         return const WelcomeScreen();
       }
