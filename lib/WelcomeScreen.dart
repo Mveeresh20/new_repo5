@@ -176,8 +176,8 @@ class WelcomeScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xffB81736),
-              Color(0xff281537),
+              Color(0xffFF04AB),
+              Color(0xffAE26CD),
             ],
           ),
         ),
@@ -195,7 +195,7 @@ class WelcomeScreen extends StatelessWidget {
                     context,
                     title: 'Welcome Celebrities',
                     description: 'Ready to connect with brands?',
-                    buttonColor: const Color(0xffB81736),
+                    buttonColor: const Color(0xffFF04AB),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -209,7 +209,7 @@ class WelcomeScreen extends StatelessWidget {
                     context,
                     title: 'Welcome Brands',
                     description: 'Ready to collaborate with celebrities?',
-                    buttonColor: const Color(0xff281537),
+                    buttonColor: const Color(0xffAE26CD),
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -224,7 +224,7 @@ class WelcomeScreen extends StatelessWidget {
                     title: 'Affiliate Partner',
                     description:
                     'Refer both users and start earning commissions!',
-                    buttonColor: Colors.green,
+                    buttonColor: const Color(0xff281537),
                     onPressed: () {
                       Navigator.push(
                         context,

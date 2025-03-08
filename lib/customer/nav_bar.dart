@@ -7,6 +7,7 @@ import 'package:tngtong/customer/RefferralProgramScreen.dart';
 import 'package:tngtong/customer/SelectPackageScreen.dart';
 import 'package:tngtong/customer/WithdrawalsScreen.dart';
 import 'package:tngtong/customer/MyBookingsScreen.dart';
+import 'package:tngtong/customer/ProfileScreen.dart';
 
 class NavBar extends StatelessWidget {
   final VoidCallback onClose;
@@ -43,7 +44,7 @@ class NavBar extends StatelessWidget {
           _buildMenuItem(Icons.home, "Trending", context,nextScreen:TrendingScreen()),
 
           _buildMenuItem(Icons.trending_up, "Wallet", context,nextScreen: WalletScreen()),
-          _buildMenuItem(Icons.person, "Profile", context,),
+          _buildMenuItem(Icons.person, "Profile", context,nextScreen:ProfileUpdateScreen()),
           _buildMenuItem(Icons.settings, "Booking", context,nextScreen:MyBookingsScreen()),
           _buildMenuItem(Icons.settings, "Withdrawals", context, nextScreen: WithdrawalsScreen()),
           _buildMenuItem(Icons.settings, "Packages", context,nextScreen: SelectPackageScreen()),

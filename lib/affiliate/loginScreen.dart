@@ -318,8 +318,8 @@ class _LoginScreenState extends State<loginScreen> {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xffB81736),
-                  Color(0xff281537),
+                  Color(0xffFF04AB),
+                  Color(0xffAE26CD),
                 ],
               ),
             ),
@@ -360,7 +360,7 @@ class _LoginScreenState extends State<loginScreen> {
                             'Email',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xffB81736),
+                              color: Color(0xffFF04AB),
                             ),
                           ),
                         ),
@@ -387,7 +387,7 @@ class _LoginScreenState extends State<loginScreen> {
                             'Password',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
-                              color: Color(0xffB81736),
+                              color: Color(0xffFF04AB),
                             ),
                           ),
                         ),
@@ -407,7 +407,7 @@ class _LoginScreenState extends State<loginScreen> {
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 17,
-                              color: Color(0xff281537),
+                              color: Color(0xffAE26CD),
                             ),
                           ),
                         ),
@@ -418,8 +418,8 @@ class _LoginScreenState extends State<loginScreen> {
                         'SIGN IN',
                         const LinearGradient(
                           colors: [
-                            Color(0xffB81736),
-                            Color(0xff281537),
+                            Color(0xffFF04AB),
+                            Color(0xffAE26CD),
                           ],
                         ),
                         _login,
@@ -430,8 +430,8 @@ class _LoginScreenState extends State<loginScreen> {
                         'SIGN IN WITH GOOGLE',
                         const LinearGradient(
                           colors: [
-                            Color(0xffB81736),
-                            Color(0xff281537),
+                            Color(0xffFF04AB),
+                            Color(0xffAE26CD),
                           ],
                         ),
                             () async {

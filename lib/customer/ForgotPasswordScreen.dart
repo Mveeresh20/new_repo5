@@ -23,8 +23,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Color(0xffB81736),
-                  Color(0xff281537),
+                  Color(0xffFF04AB),
+                  Color(0xffAE26CD),
                 ],
               ),
             ),
@@ -64,7 +64,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           'Enter your Gmail',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
+                            color: Color(0xffFF04AB),
                           ),
                         ),
                       ),
@@ -75,8 +75,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       'Send Reset Link',
                       const LinearGradient(
                         colors: [
-                          Color(0xffB81736),
-                          Color(0xff281537),
+                          Color(0xffFF04AB),
+                          Color(0xffAE26CD),
                         ],
                       ),
                           () async {

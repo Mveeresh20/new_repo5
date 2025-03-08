@@ -64,8 +64,8 @@ class _WithdrawRequestScreenState extends State<WithdrawRequestScreen> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xffB81736),
-                Color(0xff281537),
+                Color(0xffFF04AB),
+                Color(0xffAE26CD),
               ],
             ),
           ),

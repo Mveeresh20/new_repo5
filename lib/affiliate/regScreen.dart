@@ -23,12 +23,14 @@ class _RegScreenState extends State<RegScreen> {
   final TextEditingController _mobController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _referralIdController = TextEditingController();
 
   Future<void> _registerUser() async {
     // Prepare the data to send to the backend
     final String fullName = _fullNameController.text;
     final String email = _emailController.text;
     final String mob = _mobController.text;
+    final String referralId = _referralIdController.text;
 
     final String password = _passwordController.text;
     final String cpassword = _confirmPasswordController.text;
@@ -44,6 +46,7 @@ class _RegScreenState extends State<RegScreen> {
         'a_mob': mob, // Update the variable name as per your input controller
         'a_password': password,
         'a_cpassword': cpassword,
+        'referralId':referralId,
       },
 
     );
@@ -94,8 +97,8 @@ class _RegScreenState extends State<RegScreen> {
             width: double.infinity,
             decoration: const BoxDecoration(
               gradient: LinearGradient(colors: [
-                Color(0xffB81736),
-                Color(0xff281537),
+                Color(0xffFF04AB),
+                Color(0xffAE26CD),
               ]),
             ),
             child: const Padding(
@@ -135,7 +138,7 @@ class _RegScreenState extends State<RegScreen> {
                           'Full Name',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
+                            color: Color(0xffFF04AB),
                           ),
                         ),
                       ),
@@ -151,7 +154,7 @@ class _RegScreenState extends State<RegScreen> {
                           'Email',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
+                            color: Color(0xffFF04AB),
                           ),
                         ),
                       ),
@@ -166,7 +169,7 @@ class _RegScreenState extends State<RegScreen> {
                           'Mobile No',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
+                            color: Color(0xffFF04AB),
                           ),
                         ),
                       ),
@@ -192,7 +195,7 @@ class _RegScreenState extends State<RegScreen> {
                           'Password',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
+                            color: Color(0xffFF04AB),
                           ),
                         ),
                       ),
@@ -218,7 +221,23 @@ class _RegScreenState extends State<RegScreen> {
                           'Confirm Password',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            color: Color(0xffB81736),
+                            color: Color(0xffFF04AB),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      controller: _referralIdController,
+                      decoration: const InputDecoration(
+                        suffixIcon: Icon(
+                          Icons.check,
+                          color: Colors.grey,
+                        ),
+                        label: Text(
+                          'Refferal Id',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffFF04AB),
                           ),
                         ),
                       ),
@@ -233,8 +252,8 @@ class _RegScreenState extends State<RegScreen> {
                           borderRadius: BorderRadius.circular(30),
                           gradient: const LinearGradient(
                             colors: [
-                              Color(0xffB81736),
-                              Color(0xff281537),
+                              Color(0xffFF04AB),
+                              Color(0xffAE26CD),
                             ],
                           ),
                         ),

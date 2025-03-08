@@ -1288,7 +1288,7 @@ class _AffiliateDashboardScreenState extends State<AffiliateDashboardScreen> {
   }
 
   Future<void> fetchUserId() async {
-    String? id = await ApiService.getUserId(loginEmail);
+    String? id = await ApiService.getAffilaterId(loginEmail);
     setState(() {
       userId = id;
     });

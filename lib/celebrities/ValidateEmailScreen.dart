@@ -45,8 +45,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xffB81736),
-            Color(0xff281537),
+            Color(0xffFF04AB),
+            Color(0xffAE26CD),
           ],
         ),
       ),
@@ -95,7 +95,7 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xffB81736),
+                color: Color(0xffFF04AB),
               ),
             ),
             SizedBox(height: screenHeight * 0.05),
@@ -106,8 +106,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
               'Validate OTP',
               const LinearGradient(
                 colors: [
-                  Color(0xffB81736),
-                  Color(0xff281537),
+                  Color(0xffFF04AB),
+                  Color(0xffAE26CD),
                 ],
               ),
               _isOtpValid && !_isLoading ? _validateOtp : null,
@@ -118,8 +118,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
               'Resend OTP',
               const LinearGradient(
                 colors: [
-                  Color(0xffB81736),
-                  Color(0xff281537),
+                  Color(0xffFF04AB),
+                  Color(0xffAE26CD),
                 ],
               ),
               _resendOtp,
@@ -166,10 +166,10 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
             decoration: const InputDecoration(
               counterText: '',
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffB81736), width: 2),
+                borderSide: BorderSide(color: Color(0xffFF04AB), width: 2),
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffB81736), width: 2),
+                borderSide: BorderSide(color: Color(0xffFF04AB), width: 2),
               ),
               hintText: '-',
               hintStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey),

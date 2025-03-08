@@ -43,7 +43,7 @@ class NavBar extends StatelessWidget {
           _buildMenuItem(Icons.trending_up, "Wallet", context,nextScreen: WalletScreen()),
           _buildMenuItem(Icons.settings, "Referral Program", context,nextScreen:ReferralProgramScreen()),
 
-          _buildMenuItem(Icons.person, "Profile", context, nextScreen: ProfileScreen()),
+          _buildMenuItem(Icons.person, "Profile", context, nextScreen: ProfileUpdateScreen()),
          /* _buildMenuItem(Icons.settings, "My Projects", context,/*nextScreen: MyProjectsScreen()*/),*/
           _buildMenuItem(Icons.settings, "Withdrawals", context,nextScreen:WithdrawalsScreen()),
           _buildMenuItem(Icons.settings, "Packages", context,nextScreen:SelectPackageScreen()),

@@ -83,8 +83,8 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Color(0xffB81736),
-                Color(0xff281537),
+                Color(0xffFF04AB),
+                Color(0xffAE26CD),
               ],
             ),
           ),
@@ -96,7 +96,7 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              'Earning Through Referrals:',
+              'Earn Through Referrals:',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
@@ -112,8 +112,8 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xffB81736),
-                      Color(0xff281537),
+                      Color(0xffFF04AB),
+                      Color(0xffAE26CD),
                     ],
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -178,8 +178,8 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xffB81736),
-                      Color(0xff281537),
+                      Color(0xffFF04AB),
+                      Color(0xffAE26CD),
                     ],
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -255,9 +255,28 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
                           : Colors.orange,
                     ),
                     title: Text(referral['name']),
-                    subtitle: Text('Referral Date: ${referral['referralDate']}'),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Referral Date: ${referral['referralDate']}'),
+                        Text('User Type: ${referral['userType']}'), // Add userType here
+                      ],
+                    ),
                     trailing: Text(referral['status']),
                   );
+                 /* return ListTile(
+                    leading: Icon(
+                      referral['status'] == 'verified'
+                          ? Icons.check_circle
+                          : Icons.hourglass_empty,
+                      color: referral['status'] == 'verified'
+                          ? Colors.green
+                          : Colors.orange,
+                    ),
+                    title: Text(referral['name']),
+                    subtitle: Text('Referral Date: ${referral['referralDate']}'),
+                    trailing: Text(referral['status']),
+                  );*/
                 },
               ),
             ),

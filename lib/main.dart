@@ -140,8 +140,8 @@ class SplashScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color(0xffB81736), // Primary color
-              Color(0xff281537), // Secondary color
+              Color(0xffFF04AB), // Primary color
+              Color(0xffAE26CD), // Secondary color
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -158,7 +158,7 @@ class SplashScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Welcome to TNGTong',
+                'Welcome to Influncer Setter',
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
