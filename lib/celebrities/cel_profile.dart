@@ -1475,6 +1475,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   File? _profileImage;
   final ImagePicker _picker = ImagePicker();
   final String? _profileImagePath = null; // Path to the profile image, can be updated by the user.
+  String? imgurl="";
   final String _apiUrl = "https://demo.infoskaters.com/api/celebrity_update_profile.php";
   File? _selectedImage;
   String _serverUrl = "https://demo.infoskaters.com/api/upload.php";
@@ -1723,7 +1724,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       print('error:$e');
 
     }
-    //_uploadImage();
+    _uploadImage();
   }
 
   Future<void> _uploadImage() async {
@@ -1842,6 +1843,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           _youtubeLinkController.text = data['youtube_link'] ?? '';
           _twitterFollowersController.text = data['twitter_followers'].toString();
           _twitterLinkController.text = data['twitter_link'] ?? '';
+           imgurl='https://demo.infoskaters.com/api/${data['profile_photo_url'] ?? 'uploads/default_profile.png'}';
          // _selectedTags=["Tag1", "Tag2", "Tag3", "Tag4", "Tag5", "Tag6"];
           _selectedGender=data['gender'] ?? '';
           //  _selectedDate=data['birthday'] ?? '';
@@ -2032,14 +2034,22 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          CircleAvatar(
+         /* CircleAvatar(
             radius: 60,
             backgroundImage: _profileImagePath != null
                 ? NetworkImage(_profileImagePath!) // Display selected image
                 : NetworkImage('https://demo.infoskaters.com/api/uploads/default_profile.png') // Fetch default image from API
             as ImageProvider,
             backgroundColor: Colors.grey[300], // Fallback background color
+          ),*/
+          CircleAvatar(
+            radius: 60,
+            backgroundImage: _profileImagePath != null
+                ? NetworkImage(_profileImagePath!) // Selected image from device
+                : NetworkImage(imgurl!) as ImageProvider, // Default image
+            backgroundColor: Colors.grey[300], // Fallback background color
           ),
+
           Positioned(
             bottom: 5,
             right: 5,

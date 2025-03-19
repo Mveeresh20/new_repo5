@@ -469,7 +469,7 @@ class _WalletScreenState extends State<WalletScreen> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color(0xffB81736), Color(0xff281537)],
+              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
             ),
           ),
         ),
@@ -485,7 +485,7 @@ class _WalletScreenState extends State<WalletScreen> {
               child: Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xffB81736), Color(0xff281537)],
+                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
                   ),
                   borderRadius: BorderRadius.all(Radius.circular(15)),
                 ),

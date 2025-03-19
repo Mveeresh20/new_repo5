@@ -7,6 +7,9 @@ import 'package:tngtong/celebrities/myProjectScreen.dart';
 import 'package:tngtong/celebrities/SelectPackageScreen.dart';
 import 'package:tngtong/celebrities/ReferralProgramScreen.dart';
 import 'package:tngtong/celebrities/WithdrawalsScreen.dart';
+import 'package:tngtong/celebrities/cel_dashboard.dart';
+
+import 'package:tngtong/celebrities/cel_project_details.dart';
 
 class NavBar extends StatelessWidget {
   final VoidCallback onClose;
@@ -39,14 +42,14 @@ class NavBar extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Menu Items
-          _buildMenuItem(Icons.home, "Home", context),
+          _buildMenuItem(Icons.home, "Home", context,nextScreen: CelebrityDashboardScreen()),
           _buildMenuItem(Icons.trending_up, "Wallet", context,nextScreen: WalletScreen()),
           _buildMenuItem(Icons.person, "Profile", context, nextScreen: ProfileUpdateScreen()),
           _buildMenuItem(Icons.settings, "My Projects", context,nextScreen: MyProjectsScreen()),
           _buildMenuItem(Icons.settings, "Withdrawals", context,nextScreen:WithdrawalsScreen()),
           _buildMenuItem(Icons.settings, "Packages", context,nextScreen:SelectPackageScreen()),
           _buildMenuItem(Icons.settings, "Referral Program", context,nextScreen:ReferralProgramScreen()),
-
+         // _buildMenuItem(Icons.personal_injury_outlined,"Project details", context, nextScreen: CelProjectDetails()),
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),
         ],
       ),

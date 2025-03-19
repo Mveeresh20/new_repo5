@@ -7,6 +7,7 @@ import 'package:tngtong/affiliate//walletScreen.dart'; // Import ProfileUpdateSc
 import 'package:tngtong/affiliate/SelectPackageScreen.dart';
 import 'package:tngtong/affiliate/ReferralProgramScreen.dart';
 import 'package:tngtong/affiliate/WithdrawalsScreen.dart';
+import 'package:tngtong/affiliate/affilate_dashboard.dart';
 
 class NavBar extends StatelessWidget {
   final VoidCallback onClose;
@@ -39,7 +40,7 @@ class NavBar extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Menu Items
-          _buildMenuItem(Icons.home, "Home", context),
+          _buildMenuItem(Icons.home, "Home", context,nextScreen: AffiliateDashboardScreen()),
           _buildMenuItem(Icons.trending_up, "Wallet", context,nextScreen: WalletScreen()),
           _buildMenuItem(Icons.settings, "Referral Program", context,nextScreen:ReferralProgramScreen()),
 

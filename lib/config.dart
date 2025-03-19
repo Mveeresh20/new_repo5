@@ -13,6 +13,11 @@ class Config {
   static const String celebrityUpdateWalletBal= '/celebrityUpdateWalletBal.php';
   static const String userUpdateWalletBal= '/userUpdateWalletBal.php';
   static const String affilaterUpdateWalletBal= '/affilaterUpdateWalletBal.php';
+  static const String get_top_trending_cel= '/get_top_trending_cel.php';
+  static const String storeBooking= '/storeBooking.php';
+  static const String get_bookings= '/get_bookings.php?userId=';  //for brands to see there bookings
+  static const String get_influencer_projects= '/get_influencer_projects.php?influencerId=';
+
 
   static const String getCelebrityTransactionHistory= '/getCelebrityTransactionHistory.php';
   static const String getBrandTransactionHistory= '/getBrandTransactionHistory.php';
