@@ -1,7 +1,13 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 class Config {
-  static const String appname = 'Influncer Setter';
+
+
+  static const String appname = 'Influencer Setter';
   //api links
   static const String apiDomain = 'https://demo.infoskaters.com/api';
+  static const String RazorPaypaymentApi = 'ggggggjjhbhhj';
+
   static const String registerEndpoint = '/customerregister.php';
   static const String CustomerEmailotpverify = '/validate_otp.php';
   static const String customerLogin = '/customerLogin.php';
@@ -30,6 +36,9 @@ class Config {
   static const String affiliater_login = '/affiliater_login.php';
   static const String affiliater_reg = '/affiliater_reg.php';
   static const String affiliaterEmailOtpVerify = '/affiliaterEmailOtpVerify.php';
+  static const String resendOtpEndpoint = '/resendOtp.php';
+  static const String forgot_password = '/forgot_password.php';
+
 //function api
   static const String functionApi='$apiDomain/function/function.php';
   static const String getUseridFromMail = '$functionApi?action=getUserId&email=';
@@ -43,6 +52,7 @@ class Config {
 
   static const String getMyReferralCode='$functionApi?action=getReferralCode&userId=';
   static const String getReferralDetails='$functionApi?action=getReferralDetails&userId=';
+  static const String getKycStatus='$functionApi?action=getKycStatus&userId=';
 
   // https://demo.infoskaters.com/api/function/function.php?action=getEarningsBal&userId=2&userType=celebrity
   static const String getEarningsBal = '$functionApi?action=getEarningsBal&userId=';
@@ -52,4 +62,24 @@ class Config {
   static const String getEarningsTransactions = '$apiDomain/getEarningsTransactions.php?userId=';
 
 // You can add more configuration variables here as needed
+
+  static String? _razorpayKey;
+
+  static Future<void> loadKey() async {
+    try {
+      final response = await http.get(
+          Uri.parse('$apiDomain /get_razorpay_key.php')
+      );
+
+      if (response.statusCode == 200) {
+        _razorpayKey = jsonDecode(response.body)['key'];
+      }
+    } catch (e) {
+      print('Error loading key: $e');
+    }
+  }
+
+  static String get razorpayKey {
+    return _razorpayKey ?? 'DEFAULT_KEY';
+  }
 }

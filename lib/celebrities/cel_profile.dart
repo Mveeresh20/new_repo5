@@ -1871,7 +1871,72 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     }
   }
 
+  void _showDeleteConfirmationDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Delete Account"),
+          content: const Text("Are you sure you want to delete your account? Your account will be automatically deleted within 2 days."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                _deleteAccount(); // Call the delete account function
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
+  Future<void> _deleteAccount() async {
+    final String deleteAccountUrl = "https://demo.infoskaters.com/api/delete_profile.php"; // Replace with your actual API endpoint
+
+    try {
+      final response = await http.post(
+        Uri.parse(deleteAccountUrl),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'u_id': userId, // Send the user ID to delete the account
+          'u_type': 'celebrity', // Send the user type
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final responseData = jsonDecode(response.body);
+        if (responseData['success'] == true) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Success: ${responseData['message']}')),
+          );
+          // Optionally, navigate the user to the login screen or another appropriate screen
+          //Navigator.of(context).pushReplacementNamed('/login');
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: ${responseData['message']}')),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Failed to delete account!')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: $e')),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -2018,6 +2083,38 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   ),
                 ),
               ),
+              // Inside the Column widget, below the "Save Changes" button
+              const SizedBox(height: 10),
+
+             /* GestureDetector(
+                onTap: () {
+                  _showDeleteConfirmationDialog(); // Show confirmation dialog
+                },
+
+                child: Container(
+                  height: 55,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.red, // Red color for delete button
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Delete Profile',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),*/
+              IconButton(
+                onPressed: () {
+                  _showDeleteConfirmationDialog();
+                },
+                icon: const Icon(Icons.delete),
+                color: Colors.red,
+                iconSize: 30,
+                padding: EdgeInsets.zero, // Remove default padding if you want it more compact
+              )
             ],
           ),
         ),

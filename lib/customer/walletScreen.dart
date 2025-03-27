@@ -528,7 +528,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             child: const Text('Recharge Wallet'),
                           ),
                         ),
-                        const SizedBox(width: 10),
+                       /* const SizedBox(width: 10),
                         Expanded(
                           child: ElevatedButton(
                             onPressed: () {
@@ -542,7 +542,7 @@ class _WalletScreenState extends State<WalletScreen> {
                             ),
                             child: const Text('Withdraw Balance'),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ],

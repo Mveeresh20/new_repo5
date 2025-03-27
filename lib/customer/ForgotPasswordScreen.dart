@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:tngtong/config.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -8,6 +11,67 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final TextEditingController _emailController = TextEditingController();
+
+  Future<void> _sendResetLink() async {
+    final email = _emailController.text.trim();
+    final userType = "user";
+    bool _isLoading = false;
+
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter your email')),
+      );
+      return;
+    }
+
+    if (userType.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select user type')),
+      );
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+    //final url = Uri.parse('https://demo.infoskaters.com/api/forgot_password.php');
+    final url = Uri.parse('${Config.apiDomain}${Config.forgot_password}');
+
+    try {
+      final response = await http.post(
+        url,
+        /* headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },*/
+        body: {
+          'email': email,
+          'userType': userType,
+          /* 'email': "gsdeveloper1212@gmail.com",
+          'userType': "affiliater",*/
+        },
+      );
+
+      final data = json.decode(response.body);
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'])),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data['message'] ?? 'An error occurred')),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     // Get screen dimensions
@@ -57,11 +121,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 child: Column(
                   children: [
                     SizedBox(height: screenHeight * 0.05),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: _emailController,
+
+                      decoration: const InputDecoration(
                         suffixIcon: Icon(Icons.check, color: Colors.grey),
                         label: Text(
-                          'Enter your Gmail',
+                          'Enter Your Email',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Color(0xffFF04AB),
@@ -72,7 +138,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     SizedBox(height: screenHeight * 0.05),
                     _buildButton(
                       screenWidth,
-                      'Send Reset Link',
+                      'Send Password',
                       const LinearGradient(
                         colors: [
                           Color(0xffFF04AB),
@@ -80,7 +146,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ],
                       ),
                           () async {
-                        // Add logic for sending reset link
+                            _sendResetLink();
+
+                            // Add logic for sending reset link
                         print('Send reset link button pressed');
                         await Future.delayed(Duration(seconds: 2)); // Simulate delay
                         print('Reset link sent');

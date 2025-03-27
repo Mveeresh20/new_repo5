@@ -452,7 +452,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tngtong/api_service.dart';
-
+import 'package:tngtong/celebrities/updateProjectStatus.dart';
 class MyProjectsScreen extends StatefulWidget {
   const MyProjectsScreen({Key? key}) : super(key: key);
 
@@ -661,21 +661,23 @@ class _MyProjectsScreenState extends State<MyProjectsScreen> {
                           'Pending',
                           Icons.hourglass_empty,
                           Colors.purple,
-                          projects.where((p) => p['b_status'] == 'pending').toList(),
+                         // projects.where((p) => p['b_status'] == 'pending').toList(),
+                          projects.where((p) => p['b_status']?.toLowerCase() == 'pending'.toLowerCase()).toList(),
                           expandedState,
                         ),
                         buildProjectSection(
                           'Ongoing',
                           Icons.autorenew,
                           Colors.purple,
-                          projects.where((p) => p['b_status'] == 'ongoing').toList(),
+                          projects.where((p) => p['b_status']?.toLowerCase() == 'ongoing'.toLowerCase()).toList(),
                           expandedState,
                         ),
                         buildProjectSection(
                           'Completed',
                           Icons.check_circle,
                           Colors.purple,
-                          projects.where((p) => p['b_status'] == 'completed').toList(),
+                         // projects.where((p) => p['b_status'] == 'completed').toList(),
+                          projects.where((p) => p['b_status']?.toLowerCase() == 'completed'.toLowerCase()).toList(),
                           expandedState,
                         ),
                       ],
@@ -715,7 +717,101 @@ class _MyProjectsScreenState extends State<MyProjectsScreen> {
     );
   }
 
+
   Widget buildProjectSection(
+      String title,
+      IconData icon,
+      Color color,
+      List<Map<String, dynamic>> filteredProjects,
+      Map<String, bool> expandedState,
+      ) {
+    bool isExpanded = expandedState[title] ?? false;
+
+    return Card(
+      elevation: 4,
+      margin: const EdgeInsets.symmetric(vertical: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(icon, color: color),
+                    const SizedBox(width: 10),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: color,
+                      ),
+                    ),
+                  ],
+                ),
+                IconButton(
+                  icon: Icon(
+                    isExpanded ? Icons.expand_less : Icons.expand_more,
+                    color: color,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      expandedState[title] = !isExpanded;
+                    });
+                  },
+                ),
+              ],
+            ),
+            const Text(
+              "List of my projects",
+              style: TextStyle(color: Colors.black54),
+            ),
+            const Divider(),
+            if (isExpanded)
+              Column(
+                children: filteredProjects
+                    .map((project) => ListTile(
+                  leading: Icon(icon, color: color),
+                  title: Text(project['b_desc']),
+                  subtitle: Text('User: ${project['user_name']}'),
+                  onTap: () {
+                    // Navigate to ProjectDetailsScreen with project data
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailProject(
+                          projectData: project, // Use projectData instead of projectDetails
+                        ),
+                      ),
+                    );
+                  },
+                ))
+                    .toList(),
+              ),
+            Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    expandedState[title] = !isExpanded;
+                  });
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: color),
+                child: Text(
+                  isExpanded ? 'View Less' : 'View More',
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  /*Widget buildProjectSection(
       String title,
       IconData icon,
       Color color,
@@ -796,5 +892,5 @@ class _MyProjectsScreenState extends State<MyProjectsScreen> {
         ),
       ),
     );
-  }
+  }*/
 }

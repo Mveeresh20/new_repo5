@@ -306,26 +306,45 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
 
 
   Future<void> _resendOtp() async {
+    // Show loading snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Resending OTP...')),
     );
 
-    final url = Uri.parse('${Config.apiDomain}${Config.CustomerEmailotpverify}');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': widget.email}),
-    );
+    try {
+      final url = Uri.parse('${Config.apiDomain}${Config.resendOtpEndpoint}');
+      // final url = Uri.parse('https://demo.infoskaters.com/api/resendOtp.php');
+      print('Sending request to: $url'); // Debug print
 
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['message'])),
+      final response = await http.post(
+        url,
+        // headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': '${widget.email}',
+          'user_type': "celebrity",
+        }),
       );
-    } else {
+
+
+
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // Success - show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'])),
+        );
+      } else {
+        // Error - show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'] ?? 'Failed to resend OTP')),
+        );
+      }
+    } catch (e) {
+      // Network or other errors
+      print('Error: ${e.toString()}');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['message'])),
+        SnackBar(content: Text('Error: ${e.toString()}')),
       );
     }
   }

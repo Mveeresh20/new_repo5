@@ -45,8 +45,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
-            Color(0xffB81736),
-            Color(0xff281537),
+            Color(0xffFF04AB),
+            Color(0xffAE26CD),
           ],
         ),
       ),
@@ -95,7 +95,7 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
-                color: Color(0xffB81736),
+                color: Color(0xffFF04AB),
               ),
             ),
             SizedBox(height: screenHeight * 0.05),
@@ -106,8 +106,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
               'Validate OTP',
               const LinearGradient(
                 colors: [
-                  Color(0xffB81736),
-                  Color(0xff281537),
+                  Color(0xffFF04AB),
+                  Color(0xffAE26CD),
                 ],
               ),
               _isOtpValid && !_isLoading ? _validateOtp : null,
@@ -118,8 +118,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
               'Resend OTP',
               const LinearGradient(
                 colors: [
-                  Color(0xffB81736),
-                  Color(0xff281537),
+                  Color(0xffFF04AB),
+                  Color(0xffAE26CD),
                 ],
               ),
               _resendOtp,
@@ -166,10 +166,10 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
             decoration: const InputDecoration(
               counterText: '',
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffB81736), width: 2),
+                borderSide: BorderSide(color: Color(0xffFF04AB), width: 2),
               ),
               enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Color(0xffB81736), width: 2),
+                borderSide: BorderSide(color: Color(0xffFF04AB), width: 2),
               ),
               hintText: '-',
               hintStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.grey),
@@ -306,26 +306,45 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
 
 
   Future<void> _resendOtp() async {
+    // Show loading snackbar
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Resending OTP...')),
     );
 
-    final url = Uri.parse('${Config.apiDomain}${Config.CustomerEmailotpverify}');
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'email': widget.email}),
-    );
+    try {
+      final url = Uri.parse('${Config.apiDomain}${Config.resendOtpEndpoint}');
+      // final url = Uri.parse('https://demo.infoskaters.com/api/resendOtp.php');
+      print('Sending request to: $url'); // Debug print
 
-    if (response.statusCode == 200) {
-      final responseData = jsonDecode(response.body);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['message'])),
+      final response = await http.post(
+        url,
+        // headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': '${widget.email}',
+          'user_type': "user",
+        }),
       );
-    } else {
+
+
+
       final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // Success - show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'])),
+        );
+      } else {
+        // Error - show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'] ?? 'Failed to resend OTP')),
+        );
+      }
+    } catch (e) {
+      // Network or other errors
+      print('Error: ${e.toString()}');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(responseData['message'])),
+        SnackBar(content: Text('Error: ${e.toString()}')),
       );
     }
   }

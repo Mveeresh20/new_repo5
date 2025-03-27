@@ -267,7 +267,10 @@ import 'nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tngtong/api_service.dart';
 import 'project_details_screen.dart';
-
+import 'package:http/http.dart' as http;
+import 'myProjectScreen.dart';
+import 'package:tngtong/celebrities/cel_profile.dart';
+import 'package:tngtong/celebrities/walletScreen.dart';
 class CelebrityDashboardScreen extends StatefulWidget {
   const CelebrityDashboardScreen({Key? key}) : super(key: key);
 
@@ -284,6 +287,9 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
   List<dynamic> projectRequests = [];
   List<Map<String, String>> brandLogos = [];
   int displayCount = 8;
+  double? walletBalance=0;
+  double? EarningBalance=0;
+  String? kycStatus;
 
   final String jsonData = '''
   [
@@ -306,7 +312,6 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
   void initState() {
     super.initState();
     _initializePreferences();
-    _loadProjectRequests();
     List<dynamic> decodedJson = json.decode(jsonData);
     brandLogos = decodedJson.map((item) {
       return {
@@ -323,6 +328,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
       loginEmail = prefs?.getString('loginEmail');
     });
     fetchUserId();
+
   }
 
   IconData _getProjectIcon(String? title) {
@@ -340,13 +346,88 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
     }
   }
 
-  Future<void> fetchUserId() async {
-    String? id = await ApiService.getUserId(loginEmail);
+  /*Future<void> fetchUserId() async {
+    String? id = await ApiService.getCelId(loginEmail);
     setState(() {
       userId = id;
     });
+    _loadProjectRequests();
+    getWallteBalance();
+    getEarningBalance();
+  }*/
+  bool isLoading = false;
+
+  Future<void> fetchUserId() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      String? id = await ApiService.getCelId(loginEmail);
+      if (id != null) {
+        setState(() {
+          userId = id;
+        });
+        checkKycStatus();
+        await getWallteBalance();
+        await getEarningBalance();
+        await _loadProjectRequests();
+
+      } else {
+        print("User ID is null");
+      }
+    } catch (e) {
+      print("Error fetching user ID: $e");
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
   }
 
+  Future<void> checkKycStatus() async {
+    try {
+      String? status = await ApiService.getKycStatus(userId,"celebrity");
+      setState(() {
+        kycStatus = status;
+      });
+
+      if (status != "verified" && status != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showKycPopup(context, status);
+        });
+      }
+    } catch (e) {
+      print("Error checking KYC status: $e");
+    }
+  }
+
+  void _showKycPopup(BuildContext context, String status) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(status == "Pending" ? "KYC Approval Pending" : "KYC Not Completed"),
+          content: Text(status == "Pending" ? "Your KYC approval is pending." : "Your KYC is not yet completed. Please complete your KYC."),
+          actions: <Widget>[
+            TextButton(
+              child: Text("Complete KYC"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfileUpdateScreen()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+/*
   Future<void> _loadProjectRequests() async {
     String jsonString = '''
     [
@@ -374,8 +455,43 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
     setState(() {
       projectRequests = json.decode(jsonString);
     });
+  }*/
+  Future<void> getWallteBalance() async {
+    double? balance = await ApiService.getCelebrityWalletBalance(userId);
+    setState(() {
+      walletBalance = balance?? 0;
+    });
   }
+  Future<void> getEarningBalance() async {
+    double? balance = await ApiService.getEarningsBal(userId,"celebrity");
+    setState(() {
+      EarningBalance = balance ?? 0;
 
+    });
+
+  }
+  Future<void> _loadProjectRequests() async {
+    if (userId == null) {
+      return; // Ensure userId is available
+    }
+
+    final response = await http.get(
+      Uri.parse('${Config.apiDomain}${Config.get_influencer_projects}$userId'),
+    );
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      if (data['success'] == true) {
+        setState(() {
+          projectRequests = data['projects']; // Update projectRequests with the fetched projects
+        });
+      } else {
+        throw Exception('Failed to load projects: ${data['message']}');
+      }
+    } else {
+      throw Exception('Failed to load projects: ${response.statusCode}');
+    }
+  }
   Future<bool> _onWillPop() async {
     return (await showDialog<bool>(
       context: context,
@@ -468,6 +584,47 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                               ),
                             ),
                             const Spacer(),
+                            // Wallet Icon with Balance (clickable)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => WalletScreen(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 4,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.purple.shade400,
+                                ),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      '₹${walletBalance?.toStringAsFixed(2) ?? '0.00'}',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 4),
+                                    const Icon(
+                                      Icons.account_balance_wallet,
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
                             IconButton(
                               icon: const Icon(
                                 Icons.notifications,
@@ -481,7 +638,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                     ),
 
                     // Card Row for Wallet Balance, New Projects, Completed Projects
-                    Padding(
+                   /* Padding(
                       padding: const EdgeInsets.all(7.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -490,6 +647,17 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                               Icons.account_balance_wallet),
                           _buildCard("New Projects", "5", Icons.work),
                           _buildCard("Projects Done", "3", Icons.check_circle),
+                        ],
+                      ),
+                    ),*/
+                    Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildCard("Wallet Balance", "₹ ${walletBalance}", Icons.account_balance_wallet),
+                          _buildCard(" Projects", projectRequests.length.toString(), Icons.work), // Display project count
+                          _buildCard("Earning Balance", "₹ ${EarningBalance}", Icons.check_circle), // You can update this dynamically as well
                         ],
                       ),
                     ),
@@ -553,9 +721,231 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                     ),
 
                     // Project List
-                    projectRequests.isEmpty
+                   /* projectRequests.isEmpty
                         ? const Center(child: CircularProgressIndicator())
-                        : ListView.builder(
+                        :// Project List*/
+                    projectRequests.isEmpty
+                        ? const Center(child: Text('No Projects', style: TextStyle(fontSize: 16, color: Colors.grey)))
+                        : Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.all(0),
+                          itemCount: projectRequests.length > 5 ? 5 : projectRequests.length, // Limit to 5 items
+                          itemBuilder: (context, index) {
+                            var project = projectRequests[index];
+                            return Card(
+                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      _getProjectIcon(project['b_desc']), // Use b_desc for the icon
+                                      size: 30,
+                                      color: Colors.purple[500],
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            project['user_name'] ?? 'Customer Name', // Display customer name
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'Description: ${project['b_desc'] ?? 'N/A'}', // Display project description
+                                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'Requested Date: ${project['b_date'] ?? 'N/A'}', // Display request date
+                                            style: TextStyle(fontSize: 12, color: Colors.cyan),
+                                          ),
+                                          SizedBox(height: 5),
+                                          const Divider(thickness: 1, color: Colors.grey),
+                                          SizedBox(height: 5),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => MyProjectsScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                'View Details',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                minimumSize: Size(80, 30),
+                                                backgroundColor: Colors.purple[500],
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        if (projectRequests.length > 5) // Show "View More" button if there are more than 5 projects
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyProjectsScreen(),
+                                  ),
+                                );
+                              },
+                              child: Text('View More'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple[500],
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    /*Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.all(0),
+                          itemCount: projectRequests.length > 5 ? 5 : projectRequests.length, // Limit to 5 items
+                          itemBuilder: (context, index) {
+                            var project = projectRequests[index];
+                            return Card(
+                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      _getProjectIcon(project['b_desc']), // Use b_desc for the icon
+                                      size: 30,
+                                      color: Colors.purple[500],
+                                    ),
+                                    SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            project['user_name'] ?? 'Customer Name', // Display customer name
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'Description: ${project['b_desc'] ?? 'N/A'}', // Display project description
+                                            style: TextStyle(fontSize: 12, color: Colors.grey),
+                                          ),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            'Requested Date: ${project['b_date'] ?? 'N/A'}', // Display request date
+                                            style: TextStyle(fontSize: 12, color: Colors.cyan),
+                                          ),
+                                          SizedBox(height: 5),
+                                          const Divider(thickness: 1, color: Colors.grey),
+                                          SizedBox(height: 5),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => ProjectDetailsScreen(
+                                                      projectDetails: project,
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                'View Details',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                minimumSize: Size(80, 30),
+                                                backgroundColor: Colors.purple[500],
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        if (projectRequests.length > 0) // Show "View More" button if there are more than 5 projects
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                    builder: (context) => MyProjectsScreen(),
+                                ));
+                              },
+                              child: Text('View More'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple[500],
+                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),*/
+                        /*: ListView.builder(
                       shrinkWrap:
                       true, // Makes the list shrink to fit content
                       physics:
@@ -651,7 +1041,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                           ),
                         );
                       },
-                    ),
+                    ),*/
                     SizedBox(
                       height: 5,
                     ),

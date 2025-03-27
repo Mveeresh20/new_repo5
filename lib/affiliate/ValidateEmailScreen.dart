@@ -122,7 +122,7 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
                   Color(0xffAE26CD),
                 ],
               ),
-              _resendOtp,
+                  () => _resendOtp(), // Wrap in an anonymous function
             ),
             const Spacer(),
             GestureDetector(
@@ -307,7 +307,53 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
   }
 
 
+
   Future<void> _resendOtp() async {
+    // Show loading snackbar
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Resending OTP...')),
+    );
+
+    try {
+      final url = Uri.parse('${Config.apiDomain}${Config.resendOtpEndpoint}');
+     // final url = Uri.parse('https://demo.infoskaters.com/api/resendOtp.php');
+      print('Sending request to: $url'); // Debug print
+
+      final response = await http.post(
+        url,
+       // headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          'email': '${widget.email}',
+          'user_type': "affiliater",
+        }),
+      );
+
+
+
+      final responseData = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        // Success - show success message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'])),
+        );
+      } else {
+        // Error - show error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(responseData['message'] ?? 'Failed to resend OTP')),
+        );
+      }
+    } catch (e) {
+      // Network or other errors
+      print('Error: ${e.toString()}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
+  }
+
+
+  /*Future<void> _resendOtp() async {
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('Resending OTP...')),
     );
@@ -330,5 +376,5 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
         SnackBar(content: Text(responseData['message'])),
       );
     }
-  }
+  }*/
 }

@@ -230,7 +230,7 @@ class ApiService {
   }
 
   //get wallete balance of celebrity
-  static Future<double?> getEarningsBal(String? cid,String? userType) async {
+  /*static Future<double?> getEarningsBal(String? cid,String? userType) async {
     String apiUrl = Config.getEarningsBal;
     if (cid == null || cid.isEmpty) {
       print('Login ID is null or empty');
@@ -251,9 +251,11 @@ class ApiService {
           final dynamic walletBalance = responseData['earning_balance'];
 
           if (walletBalance is num) {
-            return walletBalance.toDouble(); // If it's already a number, return as double
+            // Convert to double and limit to 2 decimal places
+            return double.parse(walletBalance.toStringAsFixed(2));
           } else if (walletBalance is String) {
-            return double.tryParse(walletBalance) ?? 0.0; // Convert string to double safely
+            // Convert string to double and limit to 2 decimal places
+            return double.tryParse(walletBalance)?.toStringAsFixed(2).toDouble() ?? 0.0;
           }
         } else {
           print('Wallet balance not found in response');
@@ -266,8 +268,49 @@ class ApiService {
     }
 
     return 0.0; // Return null if fetching or parsing fails
-  }
+  }*/
+  static Future<double?> getEarningsBal(String? cid, String? userType) async {
+    String apiUrl = Config.getEarningsBal;
+    if (cid == null || cid.isEmpty) {
+      print('Login ID is null or empty');
+      return null;
+    }
 
+    final String url = '$apiUrl$cid&userType=$userType';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+        if (responseData.containsKey('earning_balance')) {
+          final dynamic walletBalance = responseData['earning_balance'];
+
+          if (walletBalance is num) {
+            // Convert to double and limit to 2 decimal places
+            return double.parse(walletBalance.toStringAsFixed(2));
+          } else if (walletBalance is String) {
+            // Convert string to double and limit to 2 decimal places
+            final parsedValue = double.tryParse(walletBalance);
+            if (parsedValue != null) {
+              return double.parse(parsedValue.toStringAsFixed(2));
+            } else {
+              return 0.0; // Fallback if parsing fails
+            }
+          }
+        } else {
+          print('Wallet balance not found in response');
+        }
+      } else {
+        print('Failed to fetch wallet balance. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching wallet balance: $e');
+    }
+
+    return 0.0; // Return 0.0 if fetching or parsing fails
+  }
   //get my ref id from userid and usertype
   static Future<String?> getMyReferralCode(String? userId,String? userType) async {
     String apiUrl = Config.getMyReferralCode;
@@ -295,6 +338,39 @@ class ApiService {
 
     return null; // Return null if fetching or parsing fails
   }
+
+  //get kyc status
+  static Future<String?> getKycStatus(String? userId,String? userType) async {
+    String apiUrl = Config.getKycStatus;
+    final String url = '$apiUrl$userId&userType=$userType';
+
+    try {
+      final response = await http.get(Uri.parse(url));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> responseData = jsonDecode(response.body);
+
+        if (responseData.containsKey('KycStatus')) {
+          final String KycStatus = responseData['KycStatus'];
+
+
+          return KycStatus; // If it's already a number, return as double
+        }
+      } else {
+        print('KycStatus not found in response');
+      }
+
+    } catch (e) {
+      print('Error fetching KycStatus: $e');
+    }
+
+    return null; // Return null if fetching or parsing fails
+  }
+
+
+
+
+
 //get referal deatials
   static Future<List<Map<String, dynamic>>> getReferralDetails(String userId, String userType) async {
    // String apiUrl = "https://demo.infoskaters.com/api/function/function.php?action=getReferralDetails&userId=$userId&userType=$userType";
