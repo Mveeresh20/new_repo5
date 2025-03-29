@@ -666,7 +666,7 @@ class _SelectPackageScreenState extends State<SelectPackageScreen> {
     return Scaffold(
       backgroundColor: Colors.purple.shade500,
       appBar: AppBar(
-        title: const Text('Select Package', style: TextStyle(color: Colors.white)),
+        title: const Text('Plans', style: TextStyle(color: Colors.white)),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

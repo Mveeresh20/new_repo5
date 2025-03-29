@@ -354,9 +354,9 @@ import 'package:tngtong/affiliate/SelectPackageScreen.dart';
 import 'package:tngtong/affiliate/ReferralProgramScreen.dart';
 import 'package:tngtong/affiliate/WithdrawalsScreen.dart';
 import 'package:tngtong/affiliate/affilate_dashboard.dart';
-import 'package:tngtong/celebrities/loginScreen.dart';
+import 'package:tngtong/affiliate/loginScreen.dart';
 import 'package:tngtong/api_service.dart';
-
+import 'SupportTicketScreen.dart';
 class NavBar extends StatefulWidget {
   final VoidCallback onClose;
 
@@ -520,6 +520,8 @@ class _NavBarState extends State<NavBar> {
               nextScreen: WithdrawalsScreen()),
           _buildMenuItem(Icons.person_add, "My Referrals", context,
               nextScreen: ReferralProgramScreen()),
+          _buildMenuItem(Icons.help_outline, "Support", context,
+              nextScreen: SupportTicketScreen()),
           _buildMenuItem(Icons.person, "My Account", context,
               nextScreen: ProfileUpdateScreen()),
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),
@@ -613,7 +615,7 @@ class _NavBarState extends State<NavBar> {
                     ),
                     SizedBox(height: 8.0),
                     Text(
-                      'Earn 20k to 25k monthly by referral this app with your friends and family !!',
+                      'Refer business owners, influencers, and your loved ones to us—earn up to ₹300 per referral and help businesses and people grow together!',
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(height: 8.0),

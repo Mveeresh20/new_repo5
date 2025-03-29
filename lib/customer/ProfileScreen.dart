@@ -398,7 +398,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffFF04AB),
-        title: const Text('Update Profile'),
+        title: const Text('My Account',style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

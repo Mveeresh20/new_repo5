@@ -281,10 +281,10 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
         await prefs.setString('isBrandLogin', 'False');
         await prefs.setString('isCelLogin', 'True');
         await prefs.setString('loginEmail', widget.email);
-        /*Navigator.push(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );*/
+          MaterialPageRoute(builder: (context) => const CelebrityDashboardScreen()),
+        );
 
         //Navigator.pushReplacementNamed(context, '/HomeScreen'); // Navigate to the next screen
       } else {

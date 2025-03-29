@@ -118,6 +118,7 @@ import 'package:tngtong/customer/ProfileScreen.dart';
 import 'package:tngtong/customer/home_screen.dart';
 import 'package:tngtong/celebrities/loginScreen.dart';
 import 'package:tngtong/api_service.dart'; // Make sure you have this service
+import 'SupportTicketScreen.dart';
 
 class NavBar extends StatefulWidget {
   final VoidCallback onClose;
@@ -282,6 +283,8 @@ class _NavBarState extends State<NavBar> {
               nextScreen: ReferralProgramScreen()),
           _buildMenuItem(Icons.calendar_today, "My Booking", context,
               nextScreen: MyBookingsScreen()),
+          _buildMenuItem(Icons.help_outline, "Support", context,
+              nextScreen: BrandSupportTicketScreen()),
           _buildMenuItem(Icons.person, "My Account", context,
               nextScreen: ProfileUpdateScreen()),
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),

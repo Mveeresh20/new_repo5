@@ -290,7 +290,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
   double? walletBalance=0;
   double? EarningBalance=0;
   String? kycStatus;
-
+  String? userName="Influencer";
   final String jsonData = '''
   [
     {"name": "Amazon", "logo": "https://logo.clearbit.com/amazon.com", "url": "https://www.amazon.com"},
@@ -372,7 +372,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
         await getWallteBalance();
         await getEarningBalance();
         await _loadProjectRequests();
-
+        _fetchProfileData(userId!);
       } else {
         print("User ID is null");
       }
@@ -384,7 +384,27 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
       });
     }
   }
+  Future<void> _fetchProfileData(String cId) async {
+    try {
+      final response = await http.get(Uri.parse(
+          "https://demo.infoskaters.com/api/get_celebrity_basic.php?c_id=$cId")); // Adjust to your celebrity endpoint
 
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        if (data.containsKey("error")) {
+          print("Error: ${data['error']}");
+          return;
+        }
+
+        setState(() {
+          userName = data['c_name'] ?? 'User'; // Adjust field name as per your API
+
+        });
+      }
+    } catch (error) {
+      print("Error fetching profile data: $error");
+    }
+  }
   Future<void> checkKycStatus() async {
     try {
       String? status = await ApiService.getKycStatus(userId,"celebrity");
@@ -624,14 +644,14 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                                 ),
                               ),
                             ),
-                            const SizedBox(width: 8),
+                           /* const SizedBox(width: 8),
                             IconButton(
                               icon: const Icon(
                                 Icons.notifications,
                                 color: Colors.white,
                               ),
                               onPressed: () {},
-                            ),
+                            ),*/
                           ],
                         ),
                       ),
@@ -683,7 +703,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    "Hello John!",
+                                    "Hello ${userName}!",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20),

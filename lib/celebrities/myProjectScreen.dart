@@ -612,6 +612,7 @@ class _MyProjectsScreenState extends State<MyProjectsScreen> {
                           child: Text(
                             "My Projects",
                             style: TextStyle(fontSize: 25),
+
                           ),
                         ),
                       ],

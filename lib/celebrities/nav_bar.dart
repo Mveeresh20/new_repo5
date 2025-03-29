@@ -119,6 +119,7 @@ import 'package:tngtong/celebrities/cel_dashboard.dart';
 import 'package:tngtong/celebrities/loginScreen.dart';
 import 'package:tngtong/celebrities/cel_project_details.dart';
 import 'package:tngtong/api_service.dart'; // Make sure you have this service
+import 'SupportTicketScreen.dart';
 
 class NavBar extends StatefulWidget {
   final VoidCallback onClose;
@@ -284,6 +285,8 @@ class _NavBarState extends State<NavBar> {
               nextScreen: ReferralProgramScreen()),
           _buildMenuItem(Icons.settings, "My Projects", context,
               nextScreen: MyProjectsScreen()),
+          _buildMenuItem(Icons.help_outline, "Support", context,
+              nextScreen: CelebritySupportTicketScreen()),
           _buildMenuItem(Icons.person, "My Account", context,
               nextScreen: ProfileUpdateScreen()),
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),

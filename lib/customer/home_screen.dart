@@ -963,6 +963,55 @@ class _HomeScreenState extends State<HomeScreen> {
                 // Static App Bar
                 _buildAppBar(),
                 // Static Search Bar
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Transform.scale(
+                          scale: 1.5, // Adjust this value to zoom in/out (1.0 = original size)
+                          child: Container(
+                            height: 60,
+                            width: 60,
+                            child: Image.asset(
+                              'assets/images/pas.png',
+                              fit: BoxFit.contain, // Ensures the image fits within the container
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                "PAY AFTER SALE!",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Stop Wasting Money & Boost Your Sales 10X with Pay-After-Sale Influencer Marketing!",
+                                style: TextStyle(fontSize: 14),
+                                textAlign: TextAlign.start,
+                                softWrap: true,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
                 _buildSearchBar(),
                 // Scrollable Content
                 Expanded(
@@ -1063,7 +1112,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          IconButton(icon: const Icon(Icons.notifications, color: Colors.white), onPressed: () {}),
+       //   IconButton(icon: const Icon(Icons.notifications, color: Colors.white), onPressed: () {}),
         ],
       ),
     );

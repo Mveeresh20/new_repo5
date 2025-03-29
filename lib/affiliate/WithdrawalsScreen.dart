@@ -300,7 +300,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Earnings'),
+        title: const Text('Withdrawals',style: TextStyle(color: Colors.white)),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(

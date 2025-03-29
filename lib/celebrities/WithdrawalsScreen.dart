@@ -299,7 +299,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Wallet'),
+        title: const Text('Withdrawals',style: TextStyle(color: Colors.white),),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -327,7 +327,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
                 child: Column(
                   children: [
                     const Text(
-                      'Wallet Balance',
+                      'Earning Balance',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

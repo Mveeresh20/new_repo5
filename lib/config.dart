@@ -31,6 +31,8 @@ class Config {
 
   static const String getAffilaterTransactionHistory= '/getAffilaterTransactionHistory.php';
   static const String get_packages = '$apiDomain/get_packages.php?usertype=';
+  static const String create_support_ticket = '/create_support_ticket.php';
+  static const String fetch_support_tickets = '/fetch_support_tickets.php';
 
   //affilate
   static const String affiliater_login = '/affiliater_login.php';

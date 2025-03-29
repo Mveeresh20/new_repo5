@@ -419,7 +419,7 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Referral Program'),
+        title: const Text('My Referrals',style: TextStyle(color: Colors.white),),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
@@ -434,7 +434,56 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Banner Image with animated visibility
-            AnimatedContainer(
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Container(
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Transform.scale(
+                      scale: 1.5, // Adjust this value to zoom in/out (1.0 = original size)
+                      child: Container(
+                        height: 100,
+                        width: 90,
+                        child: Image.asset(
+                          'assets/images/banner_icon.png',
+                          fit: BoxFit.contain, // Ensures the image fits within the container
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 30,
+                    ),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "Refer & Earn!",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Refer business owners, influencers, and your loved ones to us—earn up to ₹300 per referral and help businesses and people grow together!",
+                            style: TextStyle(fontSize: 14),
+                            textAlign: TextAlign.start,
+                            softWrap: true,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+
+/*            AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               height: _showBanner ? 180 : 0,
               width: double.infinity,
@@ -447,7 +496,7 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
                 ),
               ),
             ),
-
+*/
             if (_showBanner) ...[
               const SizedBox(height: 20),
               const Text(

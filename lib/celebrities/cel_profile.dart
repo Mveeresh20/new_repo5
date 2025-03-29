@@ -1833,15 +1833,15 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
           _accountHolderController.text = data['account_holder_name'] ?? '';
           _panController.text = data['pan_number'] ?? '';
           _upiNumberController.text = data['upi_number'] ?? '';
-          _instagramFollowersController.text = data['instagram_followers'].toString();
+          _instagramFollowersController.text = data['instagram_followers'].toString() ?? '';
           _instagramLinkController.text = data['instagram_link'] ?? '';
-          _facebookFollowersController.text = data['facebook_followers'].toString();
+          _facebookFollowersController.text = data['facebook_followers'].toString() ?? '';
           _facebookLinkController.text = data['facebook_link'] ?? '';
-          _linkedinFollowersController.text = data['linkedin_followers'].toString();
+          _linkedinFollowersController.text = data['linkedin_followers'].toString() ?? '';
           _linkedinLinkController.text = data['linkedin_link'] ?? '';
-          _youtubeFollowersController.text = data['youtube_followers'].toString();
+          _youtubeFollowersController.text = data['youtube_followers'].toString() ?? '';
           _youtubeLinkController.text = data['youtube_link'] ?? '';
-          _twitterFollowersController.text = data['twitter_followers'].toString();
+          _twitterFollowersController.text = data['twitter_followers'].toString() ?? '';
           _twitterLinkController.text = data['twitter_link'] ?? '';
            imgurl='https://demo.infoskaters.com/api/${data['profile_photo_url'] ?? 'uploads/default_profile.png'}';
          // _selectedTags=["Tag1", "Tag2", "Tag3", "Tag4", "Tag5", "Tag6"];
@@ -1942,7 +1942,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffFF04AB),
-        title: const Text('Update Profile'),
+        title: const Text('My Account', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
