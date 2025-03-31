@@ -320,7 +320,7 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
   String? loginEmail;
   String? userId;
   String? userType = "brand";
-  late List<Map<String, dynamic>> referrals;
+  late List<Map<String, dynamic>> referrals=[];
   final ScrollController _scrollController = ScrollController();
   bool _showBanner = true;
 
@@ -419,13 +419,20 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Referrals'),
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
+        title: const Text('My Referrals', style: TextStyle(color: Colors.white),),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
             ),
-          ),
+             
+            ),
         ),
       ),
       body: Padding(
@@ -513,12 +520,15 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
                 ),
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                    ),
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
+                 decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
                   child: Column(
                     children: [
                       const Text(
@@ -584,11 +594,14 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [

@@ -147,7 +147,8 @@ class _NavBarState extends State<NavBar> {
       final loginEmail = prefs.getString('loginEmail');
 
       if (loginEmail != null) {
-        final id = await ApiService.getUserId(loginEmail); // Adjust this to your customer API method
+        final id = await ApiService.getUserId(
+            loginEmail); // Adjust this to your customer API method
         if (id != null) {
           await _fetchProfileData(id);
         }
@@ -174,7 +175,8 @@ class _NavBarState extends State<NavBar> {
         }
 
         setState(() {
-          userName = data['full_name'] ?? 'User'; // Adjust field name as per your API
+          userName =
+              data['full_name'] ?? 'User'; // Adjust field name as per your API
           userEmail = data['email']; // Adjust field name as per your API
           userId = cId;
         });
@@ -219,8 +221,8 @@ class _NavBarState extends State<NavBar> {
                     isLoading
                         ? '...'
                         : userName?.isNotEmpty ?? false
-                        ? userName!.substring(0, 1).toUpperCase()
-                        : 'U',
+                            ? userName!.substring(0, 1).toUpperCase()
+                            : 'U',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -262,8 +264,9 @@ class _NavBarState extends State<NavBar> {
                     await prefs.clear();
                     Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => const loginScreen()),
-                          (Route<dynamic> route) => false,
+                      MaterialPageRoute(
+                          builder: (context) => const loginScreen()),
+                      (Route<dynamic> route) => false,
                     );
                   },
                 ),
@@ -306,7 +309,7 @@ class _NavBarState extends State<NavBar> {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const loginScreen()),
-                (Route<dynamic> route) => false,
+            (Route<dynamic> route) => false,
           );
         } else if (nextScreen != null) {
           Navigator.push(
@@ -344,7 +347,7 @@ class _NavBarState extends State<NavBar> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(4.0),
           child: Row(
             children: [
               Container(
@@ -384,7 +387,8 @@ class _NavBarState extends State<NavBar> {
                     SizedBox(height: 8.0),
                     OutlinedButton(
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                         minimumSize: Size(80, 30),
                         backgroundColor: Colors.purple[500],
                         shape: RoundedRectangleBorder(

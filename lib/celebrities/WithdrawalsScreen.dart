@@ -156,6 +156,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
     _razorpay.clear();
     super.dispose();
   }
+
   Future<void> fetchUserId() async {
     String? id = await ApiService.getCelId(loginEmail);
     setState(() {
@@ -164,6 +165,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
     getWallteBalance();
     getTransactionHistory();
   }
+
   Future<void> _initializePreferences() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -171,24 +173,23 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
     });
     print('Login Email: $loginEmail');
     fetchUserId();
-
   }
+
   Future<void> getWallteBalance() async {
-    double? balance = await ApiService.getEarningsBal(userId,"celebrity");
+    double? balance = await ApiService.getEarningsBal(userId, "celebrity");
     setState(() {
       walletBalance = balance ?? 0;
-
     });
-
   }
 
   Future<void> getTransactionHistory() async {
     try {
       final response = await http.get(
-        Uri.parse('${Config.getEarningsTransactions}$userId&userType=celebrity'),
+        Uri.parse(
+            '${Config.getEarningsTransactions}$userId&userType=celebrity'),
         //Uri.parse('https://demo.infoskaters.com/api/getEarningsTransactions.php?userId=$userId&userType=celebrity'),
 
-      headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json"},
       );
 
       if (response.statusCode == 200) {
@@ -270,6 +271,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
       );
     }
   }
+
   void _handlePaymentError(PaymentFailureResponse response) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Payment Failed: ${response.message}")),
@@ -278,7 +280,8 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
 
   void _handleExternalWallet(ExternalWalletResponse response) {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("External Wallet Selected: ${response.walletName}")),
+      SnackBar(
+          content: Text("External Wallet Selected: ${response.walletName}")),
     );
   }
 
@@ -299,13 +302,13 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Withdrawals',style: TextStyle(color: Colors.white),),
+        iconTheme: IconThemeData(color: Colors.white),
+        title: const Text(
+          'Withdrawals',
+          style: TextStyle(color: Colors.white),
+        ),
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-            ),
-          ),
+          color: Colors.purple,
         ),
       ),
       body: Padding(
@@ -318,11 +321,15 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+                
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
@@ -347,7 +354,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                       /* Expanded(
+                        /* Expanded(
                           child: ElevatedButton(
                             onPressed: () {
                               _startPayment();
@@ -401,10 +408,12 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
                   final transaction = transactions[index];
                   return ListTile(
                     leading: Icon(
-                      (transaction['type'] == 'credit' || transaction['type'] == 'Credit')
+                      (transaction['type'] == 'credit' ||
+                              transaction['type'] == 'Credit')
                           ? Icons.arrow_upward
                           : Icons.arrow_downward,
-                      color: (transaction['type'] == 'credit' || transaction['type'] == 'Credit')
+                      color: (transaction['type'] == 'credit' ||
+                              transaction['type'] == 'Credit')
                           ? Colors.green
                           : Colors.red,
                     ),
@@ -415,7 +424,8 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
-                        color: (transaction['type'] == 'credit' || transaction['type'] == 'Credit')
+                        color: (transaction['type'] == 'credit' ||
+                                transaction['type'] == 'Credit')
                             ? Colors.green
                             : Colors.red,
                       ),
@@ -461,7 +471,8 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
                 String amount = amountController.text;
                 if (amount.isNotEmpty) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Withdrawal request sent for ₹$amount')),
+                    SnackBar(
+                        content: Text('Withdrawal request sent for ₹$amount')),
                   );
                   Navigator.of(context).pop();
                 }

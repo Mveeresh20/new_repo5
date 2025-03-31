@@ -1021,7 +1021,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
 
   Widget _buildCard(String title, String value, IconData icon) {
     return SizedBox(
-      height: 90,
+      height: 100,
       width: 115,
       child: Card(
         elevation: 3,

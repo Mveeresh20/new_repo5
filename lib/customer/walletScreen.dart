@@ -468,13 +468,17 @@ class _WalletScreenState extends State<WalletScreen> {
       appBar: AppBar(
         title: const Text('Wallet',style: TextStyle(color: Colors.white)),
         flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
+          decoration:  BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
             ),
-          ),
         ),
       ),
+      ),
+    
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -485,11 +489,16 @@ class _WalletScreenState extends State<WalletScreen> {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+                
+                
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [

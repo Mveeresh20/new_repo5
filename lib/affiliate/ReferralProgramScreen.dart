@@ -624,7 +624,7 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
   String? loginEmail;
   String? userId;
   String? userType = "affiliater";
-  late List<Map<String, dynamic>> referrals;
+  late List<Map<String, dynamic>> referrals=[];
   final ScrollController _scrollController = ScrollController();
   bool _showBanner = true;
 
@@ -722,227 +722,203 @@ class _ReferralProgramScreenState extends State<ReferralProgramScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('My Referrals',style: TextStyle(color: Colors.white)),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
+  appBar: AppBar(
+    title: const Text('My Referrals', style: TextStyle(color: Colors.white)),
+    flexibleSpace: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color.fromARGB(255, 207, 9, 204), Color(0xffAE26CD)],
+        ),
+      ),
+    ),
+  ),
+  body: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Single banner card with gradient background
+        Padding(
+          padding: const EdgeInsets.all(16),
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Transform.scale(
+                  scale: 1.5,
+                  child: SizedBox(
+                    height: 100,
+                    width: 90,
+                    child: Image.asset(
+                      'assets/images/banner_icon.png',
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 30),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text(
+                        "Refer & Earn!",
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        "Refer business owners, influencers, and your loved ones to us—earn up to ₹300 per referral and help businesses and people grow together!",
+                        style: TextStyle(fontSize: 14),
+                        textAlign: TextAlign.start,
+                        softWrap: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Single banner card with gradient background
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 8),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Transform.scale(
-                      scale: 1.5, // Adjust this value to zoom in/out (1.0 = original size)
-                      child: Container(
-                        height: 100,
-                        width: 90,
-                        child: Image.asset(
-                          'assets/images/banner_icon.png',
-                          fit: BoxFit.contain, // Ensures the image fits within the container
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "Refer & Earn!",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            "Refer business owners, influencers, and your loved ones to us—earn up to ₹300 per referral and help businesses and people grow together!",
-                            style: TextStyle(fontSize: 14),
-                            textAlign: TextAlign.start,
-                            softWrap: true,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
 
-            // Referral code card
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              height: _showBanner ? null : 0,
-              curve: Curves.easeInOut,
-              child: Column(
-                children: [
-                  const SizedBox(height: 16),
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                        ),
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'Your Referral Code:',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(color: Colors.black),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  ReferralCode ?? 'Loading...',
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const SizedBox(width: 10),
-                                IconButton(
-                                  icon: const Icon(Icons.copy),
-                                  onPressed: ReferralCode != null
-                                      ? () => _copyReferralCode(ReferralCode!)
-                                      : null,
-                                ),
-                                IconButton(
-                                  icon: const Icon(Icons.share),
-                                  onPressed: ReferralCode != null
-                                      ? () => _shareReferralCode(ReferralCode!)
-                                      : null,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                ],
-              ),
-            ),
-
-            const Text(
-              'My Referrals:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 10),
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
+        // Referral code card
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          height: _showBanner ? null : 0,
+          curve: Curves.easeInOut,
+          child: Column(
+            children: [
+              const SizedBox(height: 16),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
                 ),
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    _buildFilterButton('all', 'All', const Color(0xffF4A261)),
-                    _buildFilterButton(
-                        'pending kyc', 'Pending KYC', const Color(0xffE76F51)),
-                    _buildFilterButton(
-                        'verified', 'Verified', const Color(0xff2A9D8F)),
-                  ],
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color.fromARGB(255, 207, 9, 204), Color(0xffAE26CD)],
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: Column(
+                    children: [
+                      const Text(
+                        'Your Referral Code:',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      const SizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: Colors.black),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              ReferralCode ?? 'Loading...',
+                              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(width: 10),
+                            IconButton(
+                              icon: const Icon(Icons.copy),
+                              onPressed: ReferralCode != null ? () => _copyReferralCode(ReferralCode!) : null,
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.share),
+                              onPressed: ReferralCode != null ? () => _shareReferralCode(ReferralCode!) : null,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: referrals.length,
-                itemBuilder: (context, index) {
-                  final referral = referrals[index];
-                  if (selectedFilter != 'all' && referral['status'] != selectedFilter) {
-                    return const SizedBox.shrink();
-                  }
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 4),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListTile(
-                      leading: Icon(
-                        referral['status'] == 'verified'
-                            ? Icons.check_circle
-                            : Icons.hourglass_empty,
-                        color: referral['status'] == 'verified'
-                            ? Colors.green
-                            : Colors.orange,
-                      ),
-                      title: Text(
-                        referral['name'],
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Referral Date: ${referral['referralDate']}'),
-                          Text('User Type: ${referral['userType']}'),
-                        ],
-                      ),
-                      trailing: Chip(
-                        label: Text(
-                          referral['status'],
-                          style: const TextStyle(color: Colors.white),
-                        ),
-                        backgroundColor: referral['status'] == 'verified'
-                            ? Colors.green
-                            : Colors.orange,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
+              const SizedBox(height: 16),
+            ],
+          ),
         ),
-      ),
-    );
+
+        const Text(
+          'My Referrals:',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Color.fromARGB(255, 207, 9, 204), Color(0xffAE26CD)],
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              children: [
+                _buildFilterButton('all', 'All', const Color(0xffF4A261)),
+                _buildFilterButton('pending kyc', 'Pending KYC', const Color(0xffE76F51)),
+                _buildFilterButton('verified', 'Verified', const Color(0xff2A9D8F)),
+              ],
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        Expanded(
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: referrals.length,
+            itemBuilder: (context, index) {
+              final referral = referrals[index];
+              if (selectedFilter != 'all' && referral['status'] != selectedFilter) {
+                return const SizedBox.shrink();
+              }
+              return Card(
+                margin: const EdgeInsets.symmetric(vertical: 4),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: ListTile(
+                  leading: Icon(
+                    referral['status'] == 'verified' ? Icons.check_circle : Icons.hourglass_empty,
+                    color: referral['status'] == 'verified' ? Colors.green : Colors.orange,
+                  ),
+                  title: Text(
+                    referral['name'],
+                    style: const TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Referral Date: ${referral['referralDate']}'),
+                      Text('User Type: ${referral['userType']}'),
+                    ],
+                  ),
+                  trailing: Chip(
+                    label: Text(
+                      referral['status'],
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    backgroundColor: referral['status'] == 'verified' ? Colors.green : Colors.orange,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    ),
+  ),
+);
+
   }
 }

@@ -299,14 +299,19 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         title: const Text('Withdrawals',style: TextStyle(color: Colors.white)),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
             ),
-          ),
-        ),
+              
+            ),
+      ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -318,11 +323,14 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
               ),
               child: Container(
                 decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
@@ -373,7 +381,7 @@ class _WithdrawalsScreenState extends State<WithdrawalsScreen> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: const Text('Withdraw Balance'),
+                            child: const Text('Withdraw Balance', style: TextStyle(color: Colors.white),),
                           ),
                         ),
                       ],

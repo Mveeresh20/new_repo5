@@ -481,23 +481,32 @@ class _MyBookingsScreenState extends State<MyBookingsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Bookings'),
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
+        title: const Text('My Bookings', style: TextStyle(color: Colors.white),),
         flexibleSpace: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
             ),
-          ),
+              
+            ),
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+         decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              
+            ),
         child: Column(
           children: [
             Padding(

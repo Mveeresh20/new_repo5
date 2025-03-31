@@ -9,7 +9,7 @@ class WithdrawRequestScreen extends StatefulWidget {
 }
 
 class _WithdrawRequestScreenState extends State<WithdrawRequestScreen> {
- /* late Razorpay _razorpay;
+  /* late Razorpay _razorpay;
 
   @override
   void initState() {
@@ -63,10 +63,7 @@ class _WithdrawRequestScreenState extends State<WithdrawRequestScreen> {
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xffFF04AB),
-                Color(0xffAE26CD),
-              ],
+              colors: [Color.fromARGB(255, 207, 9, 204), Color(0xffAE26CD)],
             ),
           ),
         ),
@@ -136,7 +133,8 @@ class _WithdrawRequestScreenState extends State<WithdrawRequestScreen> {
                 if (amount.isNotEmpty) {
                   Navigator.of(context).pop();
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Withdrawal request sent for ₹$amount')),
+                    SnackBar(
+                        content: Text('Withdrawal request sent for ₹$amount')),
                   );
                 }
               },

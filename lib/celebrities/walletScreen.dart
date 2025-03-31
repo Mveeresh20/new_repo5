@@ -465,183 +465,175 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Wallet',
-            style: TextStyle(color: Colors.white),),
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-            ),
-          ),
+  appBar: AppBar(
+    iconTheme: const IconThemeData(color: Colors.white),
+    title: const Text(
+      'Wallet',
+      style: TextStyle(color: Colors.white),
+    ),
+    flexibleSpace: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.purple, Colors.purple],
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    const Text(
-                      'Wallet Balance',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      '₹$walletBalance',
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _startPayment();
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffF4A261),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: const Text('Recharge Wallet'),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                       /* Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {
-                              _showWithdrawDialog(context);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffE76F51),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: const Text('Withdraw Balance'),
-                          ),
-                        ),*/
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Transaction History',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: ListView.builder(
-                itemCount: transactions.length,
-                itemBuilder: (context, index) {
-                  final transaction = transactions[index];
-                  return ListTile(
-                    leading: Icon(
-                      transaction['type'] == 'credit'
-                          ? Icons.arrow_upward
-                          : Icons.arrow_downward,
-                      color: transaction['type'] == 'credit'
-                          ? Colors.green
-                          : Colors.red,
-                    ),
-                    title: Text(transaction['description']),
-                    subtitle: Text(transaction['date']),
-                    trailing: Text(
-                      '₹${transaction['amount']}',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: transaction['type'] == 'credit'
-                            ? Colors.green
-                            : Colors.red,
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _showWithdrawDialog(BuildContext context) {
-    TextEditingController amountController = TextEditingController();
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
+    ),
+  ),
+  body: Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Column(
+      children: [
+        Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          title: const Text('Enter Withdrawal Amount'),
-          content: TextField(
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              hintText: 'Enter amount',
-              border: OutlineInputBorder(),
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(15)),
+            ),
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                const Text(
+                  'Wallet Balance',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  '₹$walletBalance',
+                  style: const TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: _startPayment,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xffF4A261),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: const Text('Recharge Wallet'),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ],
+                ),
+              ],
             ),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: const Text('Cancel'),
+        ),
+        const SizedBox(height: 20),
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Transaction History',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
             ),
-            ElevatedButton(
-              onPressed: () {
-                String amount = amountController.text;
-                if (amount.isNotEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Withdrawal request sent for ₹$amount')),
-                  );
-                  Navigator.of(context).pop();
-                }
-              },
-              child: const Text('Send Request'),
-            ),
-          ],
-        );
-      },
-    );
+          ),
+        ),
+        const SizedBox(height: 10),
+        Expanded(
+          child: ListView.builder(
+            itemCount: transactions.length,
+            itemBuilder: (context, index) {
+              final transaction = transactions[index];
+              return ListTile(
+                leading: Icon(
+                  transaction['type'] == 'credit'
+                      ? Icons.arrow_upward
+                      : Icons.arrow_downward,
+                  color: transaction['type'] == 'credit'
+                      ? Colors.green
+                      : Colors.red,
+                ),
+                title: Text(transaction['description']),
+                subtitle: Text(transaction['date']),
+                trailing: Text(
+                  '₹${transaction['amount']}',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: transaction['type'] == 'credit'
+                        ? Colors.green
+                        : Colors.red,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    ),
+  ),
+);
   }
+
+void _showWithdrawDialog(BuildContext context) {
+  TextEditingController amountController = TextEditingController();
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+        title: const Text('Enter Withdrawal Amount'),
+        content: TextField(
+          controller: amountController,
+          keyboardType: TextInputType.number,
+          decoration: const InputDecoration(
+            hintText: 'Enter amount',
+            border: OutlineInputBorder(),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              String amount = amountController.text;
+              if (amount.isNotEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Withdrawal request sent for ₹$amount')),
+                );
+                Navigator.of(context).pop();
+              }
+            },
+            child: const Text('Send Request'),
+          ),
+        ],
+      );
+    },
+  );
 }
+
+  }
+
 
 // Demo JSON data for transaction history
 /*List<Map<String, dynamic>> demoTransactions = [

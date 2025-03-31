@@ -526,7 +526,7 @@ class _NavBarState extends State<NavBar> {
               nextScreen: ProfileUpdateScreen()),
           _buildMenuItem(Icons.logout, "Logout", context, isLogout: true),
 
-          SizedBox(height: 56),
+          SizedBox(height: 30),
           _buildReferralCard(context),
         ],
       ),
@@ -581,7 +581,7 @@ class _NavBarState extends State<NavBar> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(4.0),
           child: Row(
             children: [
               Container(

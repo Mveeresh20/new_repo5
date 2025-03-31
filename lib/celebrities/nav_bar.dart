@@ -346,7 +346,7 @@ class _NavBarState extends State<NavBar> {
           borderRadius: BorderRadius.circular(8.0),
         ),
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(4.0),
           child: Row(
             children: [
               Container(

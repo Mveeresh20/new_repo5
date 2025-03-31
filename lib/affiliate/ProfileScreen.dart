@@ -1017,7 +1017,7 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFF04AB),
+        backgroundColor: Colors.purple,
         title: const Text('MY Account',style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
@@ -1077,12 +1077,15 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                 child: Container(
                   height: 55,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
-                    ),
-                  ),
+                  decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
+            ),
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+            ),
                   child: const Center(
                     child: Text(
                       'Save Changes',

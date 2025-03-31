@@ -1941,7 +1941,8 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffFF04AB),
+      backgroundColor: Colors.purple,
+       
         title: const Text('My Account', style: TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
@@ -2072,7 +2073,10 @@ class _ProfileUpdateScreenState extends State<ProfileUpdateScreen> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     gradient: const LinearGradient(
-                      colors: [Color(0xffFF04AB), Color(0xffAE26CD)],
+                      colors: [
+                  Color.fromARGB(255, 207, 9, 204),
+                  Color(0xffAE26CD)
+                ],
                     ),
                   ),
                   child: const Center(
