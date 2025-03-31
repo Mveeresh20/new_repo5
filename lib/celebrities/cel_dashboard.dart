@@ -258,6 +258,13 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
 
 }
 */
+
+
+
+
+
+
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -855,213 +862,7 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
                           ),
                       ],
                     ),
-                    /*Column(
-                      children: [
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          padding: EdgeInsets.all(0),
-                          itemCount: projectRequests.length > 5 ? 5 : projectRequests.length, // Limit to 5 items
-                          itemBuilder: (context, index) {
-                            var project = projectRequests[index];
-                            return Card(
-                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                              elevation: 2,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Icon(
-                                      _getProjectIcon(project['b_desc']), // Use b_desc for the icon
-                                      size: 30,
-                                      color: Colors.purple[500],
-                                    ),
-                                    SizedBox(width: 12),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            project['user_name'] ?? 'Customer Name', // Display customer name
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black87,
-                                            ),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            'Description: ${project['b_desc'] ?? 'N/A'}', // Display project description
-                                            style: TextStyle(fontSize: 12, color: Colors.grey),
-                                          ),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            'Requested Date: ${project['b_date'] ?? 'N/A'}', // Display request date
-                                            style: TextStyle(fontSize: 12, color: Colors.cyan),
-                                          ),
-                                          SizedBox(height: 5),
-                                          const Divider(thickness: 1, color: Colors.grey),
-                                          SizedBox(height: 5),
-                                          Align(
-                                            alignment: Alignment.bottomRight,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => ProjectDetailsScreen(
-                                                      projectDetails: project,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                              child: const Text(
-                                                'View Details',
-                                                style: TextStyle(color: Colors.white),
-                                              ),
-                                              style: ElevatedButton.styleFrom(
-                                                padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                                                minimumSize: Size(80, 30),
-                                                backgroundColor: Colors.purple[500],
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.circular(10),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        if (projectRequests.length > 0) // Show "View More" button if there are more than 5 projects
-                          Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                    builder: (context) => MyProjectsScreen(),
-                                ));
-                              },
-                              child: Text('View More'),
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.purple[500],
-                                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),*/
-                        /*: ListView.builder(
-                      shrinkWrap:
-                      true, // Makes the list shrink to fit content
-                      physics:
-                      NeverScrollableScrollPhysics(), // Disables scroll within list
-                      padding: EdgeInsets.all(0),
-                      itemCount: projectRequests.length,
-                      itemBuilder: (context, index) {
-                        var project = projectRequests[index];
-                        return Card(
-                          margin: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 16),
-                          elevation: 2,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Icon(
-                                  _getProjectIcon(project['title']),
-                                  size: 30,
-                                  color: Colors.purple[500],
-                                ),
-                                SizedBox(width: 12),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        project['title'] ??
-                                            'Project Request',
-                                        style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black87,
-                                        ),
-                                      ),
-                                      SizedBox(height: 5),
-                                      Text(
-                                        'Requested Date: ${project['request_date'] ?? 'N/A'}',
-                                        style: TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.cyan),
-                                      ),
-                                      SizedBox(height: 5),
-                                      const Divider(
-                                          thickness: 1,
-                                          color: Colors.grey),
-                                      SizedBox(height: 5),
-                                      Align(
-                                        alignment: Alignment.bottomRight,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ProjectDetailsScreen(
-                                                      projectDetails: project,
-                                                    ),
-                                              ),
-                                            );
-                                          },
-                                          child: const Text(
-                                            'View Details',
-                                            style: TextStyle(
-                                                color: Colors.white),
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 5,
-                                                horizontal: 10),
-                                            minimumSize: Size(80, 30),
-                                            backgroundColor:
-                                            Colors.purple[500],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                              BorderRadius.circular(
-                                                  10),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    ),*/
+
                     SizedBox(
                       height: 5,
                     ),
@@ -1286,3 +1087,792 @@ class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
     }
   }
 }
+
+/*
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:tngtong/config.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tngtong/api_service.dart';
+import 'package:http/http.dart' as http;
+import 'myProjectScreen.dart';
+import 'package:tngtong/celebrities/cel_profile.dart';
+import 'package:tngtong/celebrities/walletScreen.dart';
+
+class CelebrityDashboardScreen extends StatefulWidget {
+  const CelebrityDashboardScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CelebrityDashboardScreen> createState() => _CelebrityDashboardScreenState();
+}
+
+class _CelebrityDashboardScreenState extends State<CelebrityDashboardScreen> {
+  bool _isNavBarOpen = false;
+  SharedPreferences? prefs;
+  String? loginEmail;
+  String? userId;
+  List<dynamic> projectRequests = [];
+  List<Map<String, String>> brandLogos = [];
+  int displayCount = 8;
+  double? walletBalance = 0;
+  double? earningBalance = 0;
+  String? kycStatus;
+  String? userName = "Influencer";
+  bool _isLoading = true;
+  bool _hasError = false;
+  int _refreshFlag = 1; // Initialize flag to 1 for first visit
+
+  final String jsonData = '''
+  [
+    {"name": "Amazon", "logo": "https://logo.clearbit.com/amazon.com", "url": "https://www.amazon.com"},
+    {"name": "Myntra", "logo": "https://logo.clearbit.com/myntra.com", "url": "https://www.myntra.com"},
+    {"name": "Ajio", "logo": "https://logo.clearbit.com/ajio.com", "url": "https://www.ajio.com"},
+    {"name": "Meesho", "logo": "https://logo.clearbit.com/meesho.com", "url": "https://www.meesho.com"},
+    {"name": "Instagram", "logo": "https://logo.clearbit.com/instagram.com", "url": "https://www.instagram.com"},
+    {"name": "Crocs", "logo": "https://logo.clearbit.com/crocs.com", "url": "https://www.crocs.com"},
+    {"name": "Nykaa", "logo": "https://logo.clearbit.com/nykaa.com", "url": "https://www.nykaa.com"},
+    {"name": "Nike", "logo": "https://logo.clearbit.com/nike.com", "url": "https://www.nike.com"},
+    {"name": "Adidas", "logo": "https://logo.clearbit.com/adidas.com", "url": "https://www.adidas.com"},
+    {"name": "Zara", "logo": "https://logo.clearbit.com/zara.com", "url": "https://www.zara.com"},
+    {"name": "Coursera", "logo":"https://logo.clearbit.com/coursera.com", "url": "https://www.coursera.com"}
+  ]
+  ''';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadBrandLogos();
+    _initializeData();
+  }
+
+  void _loadBrandLogos() {
+    try {
+      List<dynamic> decodedJson = json.decode(jsonData);
+      brandLogos = decodedJson.map((item) {
+        return {
+          'name': item['name'].toString(),
+          'logo': item['logo'].toString(),
+          'url': item['url'].toString(),
+        };
+      }).toList();
+    } catch (e) {
+      print("Error loading brand logos: $e");
+    }
+  }
+
+  Future<void> _initializeData() async {
+
+
+    try {
+      await _initializePreferences();
+      await fetchUserId();
+
+      if (userId != null) {
+        await Future.wait([
+          checkKycStatus(),
+          getWalletBalance(),
+          getEarningBalance(),
+          _loadProjectRequests(),
+          _fetchProfileData(userId!),
+        ]);
+      }
+
+
+
+    } catch (e) {
+      print("Error initializing data: $e");
+      _navigateToFallbackScreen();
+
+      // Show error message but stay on the same page
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Failed to load data. Please try again.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+  void _navigateToFallbackScreen() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const CelebrityDashboardScreen()), // Replace with your fallback screen
+            (Route<dynamic> route) => false, // This removes all previous routes
+      );
+    });
+  }
+  Future<void> _initializePreferences() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      loginEmail = prefs?.getString('loginEmail');
+    });
+
+    if (loginEmail == null) {
+      _navigateToFallbackScreen();
+      return;
+    }
+
+  }
+
+  IconData _getProjectIcon(String? title) {
+    if (title == null) return Icons.work;
+
+    switch (title.toLowerCase()) {
+      case 'website development':
+        return Icons.public;
+      case 'mobile app ui design':
+        return Icons.smartphone;
+      case 'social media marketing':
+        return Icons.campaign;
+      default:
+        return Icons.work;
+    }
+  }
+
+  Future<void> fetchUserId() async {
+    String? id = await ApiService.getCelId(loginEmail);
+    setState(() {
+      userId = id;
+    });
+    if (userId == null) {
+      _navigateToFallbackScreen();
+      return;
+    }
+  }
+
+  Future<void> _fetchProfileData(String cId) async {
+    try {
+      final response = await http.get(Uri.parse(
+          "https://demo.infoskaters.com/api/get_celebrity_basic.php?c_id=$cId"));
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = jsonDecode(response.body);
+        if (data.containsKey("error")) {
+          print("Error: ${data['error']}");
+          return;
+        }
+
+        setState(() {
+          userName = data['c_name'] ?? 'User';
+        });
+      }
+    } catch (error) {
+      print("Error fetching profile data: $error");
+    }
+  }
+
+  Future<void> checkKycStatus() async {
+    try {
+      String? status = await ApiService.getKycStatus(userId, "celebrity");
+      setState(() {
+        kycStatus = status;
+      });
+
+      if (status != "verified" && status != null) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showKycPopup(context, status);
+        });
+      }
+    } catch (e) {
+      print("Error checking KYC status: $e");
+    }
+  }
+
+  void _showKycPopup(BuildContext context, String status) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(status == "Pending" ? "KYC Approval Pending" : "KYC Not Completed"),
+          content: Text(status == "Pending" ? "Your KYC approval is pending." : "Your KYC is not yet completed. Please complete your KYC."),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("Complete KYC"),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ProfileUpdateScreen()),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> getWalletBalance() async {
+    double? balance = await ApiService.getCelebrityWalletBalance(userId);
+    setState(() {
+      walletBalance = balance ?? 0;
+    });
+  }
+
+  Future<void> getEarningBalance() async {
+    double? balance = await ApiService.getEarningsBal(userId, "celebrity");
+    setState(() {
+      earningBalance = balance ?? 0;
+    });
+  }
+
+  Future<void> _loadProjectRequests() async {
+    if (userId == null) return;
+
+    try {
+      final response = await http.get(
+        Uri.parse('${Config.apiDomain}${Config.get_influencer_projects}$userId'),
+      );
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
+        if (data['success'] == true) {
+          setState(() {
+            projectRequests = data['projects'];
+          });
+        } else {
+          throw Exception('Failed to load projects: ${data['message']}');
+        }
+      } else {
+        throw Exception('Failed to load projects: ${response.statusCode}');
+      }
+    } catch (e) {
+      print("Error loading projects: $e");
+      throw e;
+    }
+  }
+
+  Future<bool> _onWillPop() async {
+    return (await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Exit'),
+        content: const Text('Do you really want to exit the app?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('No'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Yes'),
+          ),
+        ],
+      ),
+    )) ?? false;
+  }
+
+  Widget _buildCard(String title, String value, IconData icon) {
+    return SizedBox(
+      height: 90,
+      width: 115,
+      child: Card(
+        elevation: 3,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              child: Container(
+                width: 2,
+                decoration: BoxDecoration(
+                  color: Colors.purple.shade500,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: const TextStyle(
+                        fontSize: 13, fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Icon(icon, size: 24, color: Colors.purple.shade500),
+                      const SizedBox(width: 11),
+                      Center(
+                        child: Text(
+                          value,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _openBrandUrl(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print("Could not open $url");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isLoading) {
+      return const Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CircularProgressIndicator(),
+              SizedBox(height: 20),
+              Text("Loading your dashboard..."),
+            ],
+          ),
+        ),
+      );
+    }
+
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // App Bar Section
+                    Container(
+                      width: double.infinity,
+                      height: 40,
+                      margin: const EdgeInsets.only(top: 16, bottom: 16),
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.purple.shade500,
+                            Colors.purple.shade500,
+                            Colors.purple.shade500
+                          ],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/new-logo.png',
+                            width: 35,
+                            height: 90,
+                            fit: BoxFit.cover,
+                          ),
+                          const SizedBox(width: 2),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.menu,
+                              size: 24,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isNavBarOpen = true;
+                              });
+                            },
+                          ),
+                          const SizedBox(width: 10),
+                          const Text(
+                            Config.appname,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const Spacer(),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const WalletScreen(),
+                                ),
+                              );
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical: 4,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: Colors.purple.shade400,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    '₹${walletBalance?.toStringAsFixed(2) ?? '0.00'}',
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 4),
+                                  const Icon(
+                                    Icons.account_balance_wallet,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+
+                    // Stats Cards
+                    Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          _buildCard("Wallet Balance", "₹ ${walletBalance?.toStringAsFixed(2)}", Icons.account_balance_wallet),
+                          _buildCard("Projects", projectRequests.length.toString(), Icons.work),
+                          _buildCard("Earning Balance", "₹ ${earningBalance?.toStringAsFixed(2)}", Icons.check_circle),
+                        ],
+                      ),
+                    ),
+
+                    // Welcome Section
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Image.asset(
+                              'assets/images/medias.png',
+                              height: 150,
+                              width: 140,
+                            ),
+                            const SizedBox(width: 30),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    "Hello $userName!",
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+                                  const SizedBox(height: 5),
+                                  const Text(
+                                    "Excited to have you on board! Our platform is designed to connect you with top brands...",
+                                    style: TextStyle(fontSize: 11),
+                                    textAlign: TextAlign.start,
+                                    softWrap: true,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+
+                    // My Projects Section
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "My Projects",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+
+                    projectRequests.isEmpty
+                        ? const Padding(
+                      padding: EdgeInsets.all(16.0),
+                      child: Text(
+                        'No Projects',
+                        style: TextStyle(fontSize: 16, color: Colors.grey),
+                      ),
+                    )
+                        : Column(
+                      children: [
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          itemCount: projectRequests.length > 5 ? 5 : projectRequests.length,
+                          itemBuilder: (context, index) {
+                            final project = projectRequests[index];
+                            return Card(
+                              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                              elevation: 2,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Icon(
+                                      _getProjectIcon(project['b_desc']),
+                                      size: 30,
+                                      color: Colors.purple[500],
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            project['user_name'] ?? 'Customer Name',
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            'Description: ${project['b_desc'] ?? 'N/A'}',
+                                            style: const TextStyle(fontSize: 12, color: Colors.grey),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            'Requested Date: ${project['b_date'] ?? 'N/A'}',
+                                            style: const TextStyle(fontSize: 12, color: Colors.cyan),
+                                          ),
+                                          const SizedBox(height: 5),
+                                          const Divider(thickness: 1, color: Colors.grey),
+                                          const SizedBox(height: 5),
+                                          Align(
+                                            alignment: Alignment.bottomRight,
+                                            child: ElevatedButton(
+                                              onPressed: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) => const MyProjectsScreen(),
+                                                  ),
+                                                );
+                                              },
+                                              child: const Text(
+                                                'View Details',
+                                                style: TextStyle(color: Colors.white),
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                                                minimumSize: const Size(80, 30),
+                                                backgroundColor: Colors.purple[500],
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.circular(10),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        if (projectRequests.length > 5)
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const MyProjectsScreen(),
+                                  ),
+                                );
+                              },
+                              child: const Text('View More'),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple[500],
+                                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                    const SizedBox(height: 5),
+
+                    // Popular Brands Section
+                    const Padding(
+                      padding: EdgeInsets.only(left: 16),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Popular Brands",
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Column(
+                        children: [
+                          GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 18,
+                              mainAxisSpacing: 19,
+                              childAspectRatio: 1,
+                            ),
+                            itemCount: displayCount,
+                            itemBuilder: (context, index) {
+                              if (index >= brandLogos.length) return const SizedBox();
+                              final brand = brandLogos[index];
+
+                              return GestureDetector(
+                                onTap: () => _openBrandUrl(brand["url"]!),
+                                child: Column(
+                                  children: [
+                                    ClipOval(
+                                      child: Image.network(
+                                        brand["logo"]!,
+                                        width: 45,
+                                        height: 45,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      brand["name"]!,
+                                      style: const TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (displayCount < brandLogos.length)
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        displayCount += 4;
+                                      });
+                                    },
+                                    child: const Text("View More", style: TextStyle(color: Colors.white)),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                          horizontal: 10),
+                                      minimumSize: const Size(80, 30),
+                                      backgroundColor: Colors.purple[500],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                                if (displayCount > 8)
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        displayCount = 8;
+                                      });
+                                    },
+                                    child: const Text("View Less", style: TextStyle(color: Colors.white)),
+                                    style: ElevatedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 5,
+                                          horizontal: 10),
+                                      minimumSize: const Size(80, 30),
+                                      backgroundColor: Colors.purple[500],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              if (_isNavBarOpen)
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _isNavBarOpen = false;
+                    });
+                  },
+                  child: Container(
+                    color: Colors.black.withOpacity(0.5),
+                  ),
+                ),
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                left: _isNavBarOpen ? 0 : -250,
+                top: 0,
+                bottom: 0,
+                child: NavBar(
+                  onClose: () {
+                    setState(() {
+                      _isNavBarOpen = false;
+                    });
+                  },
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}*/
