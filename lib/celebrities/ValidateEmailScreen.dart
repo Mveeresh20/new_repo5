@@ -76,7 +76,8 @@ class _ValidateEmailScreenState extends State<ValidateEmailScreen> {
       height: double.infinity,
       width: double.infinity,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.05),
         child: Column(
           children: [
             SizedBox(height: screenHeight * 0.03),
